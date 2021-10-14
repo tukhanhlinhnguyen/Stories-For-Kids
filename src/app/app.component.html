@@ -1,0 +1,21 @@
+<header *ngIf="isLoggedIn">
+    
+
+    <!-- <div class="top-bar">
+        <button class="logout-btn btn btn-primary" (click)="logout()">Logout</button>
+    </div> -->
+   
+    <app-site-header></app-site-header>
+</header>
+
+<main>
+    <router-outlet>
+    </router-outlet>
+    <div class="content">
+        <span>uploadStory app is running!</span>
+    </div>
+</main>
+
+<footer>
+    <app-footer></app-footer>
+</footer>

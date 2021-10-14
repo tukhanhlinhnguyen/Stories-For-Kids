@@ -1,0 +1,40 @@
+// Open or close nav according to class and size of screen
+
+#sidebar-wrapper.opened-sm.opened-lg {
+	display: block;
+}
+@media screen and (min-width: 768px) {
+	#sidebar-wrapper.opened-sm.opened-lg {
+		// display: block;
+		display: table-cell;
+	}
+}
+
+#sidebar-wrapper.opened-sm.closed-lg {
+	display: block;
+}
+@media screen and (min-width: 768px) {
+	#sidebar-wrapper.opened-sm.closed-lg {
+		display: none;
+	}
+}
+
+#sidebar-wrapper.closed-sm.opened-lg {
+	display: none;
+}
+@media screen and (min-width: 768px) {
+	#sidebar-wrapper.closed-sm.opened-lg {
+		// display: block;
+		display: table-cell;
+	}
+}
+
+#sidebar-wrapper.closed-sm.closed-lg {
+	display: none;
+}
+
+@media screen and (min-width: 768px) {
+	#sidebar-wrapper.closed-sm.closed-lg {
+		display: none;
+	}
+}

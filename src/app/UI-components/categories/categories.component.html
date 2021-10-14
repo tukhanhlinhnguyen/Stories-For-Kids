@@ -1,0 +1,13 @@
+<div class="category-container">
+    <!-- <div class="title-container">
+        <h4 class="hero-text text-gray-500">Storybook Categories:</h4>
+    </div> -->
+    <div class="wrapper">
+            <div *ngFor="let category of categories" class="foo">
+                <div class="category-image-container">
+                    <img [src]="category.figPath">
+                    <div class="category-name text-primary-500">{{category.name}}</div>
+                </div>
+            </div>
+    </div>
+</div>

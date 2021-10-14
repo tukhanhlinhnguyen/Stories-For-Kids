@@ -1,0 +1,64 @@
+<div class="storybook-level-btn-container">
+    <!-- <div>
+        <h4 class="hero-text text-gray-500">Storybook Levels:</h4>
+    </div> -->
+    <img id="aa" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="aa" src="../../../../assets/icons/BookLevel/svg/bookLevel_aa.svg">
+    <img id="A" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="A" src="../../../../assets/icons/BookLevel/svg/bookLevel_a.svg">
+    <img id="B" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="B" src="../../../../assets/icons/BookLevel/svg/bookLevel_b.svg">
+    <img id="C" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="C" src="../../../../assets/icons/BookLevel/svg/bookLevel_c.svg">
+    <img id="D" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="D" src="../../../../assets/icons/BookLevel/svg/bookLevel_d.svg">
+    <img id="E" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="E" src="../../../../assets/icons/BookLevel/svg/bookLevel_e.svg">
+    <img id="F" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="F" src="../../../../assets/icons/BookLevel/svg/bookLevel_f.svg">
+    <img id="G" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="G" src="../../../../assets/icons/BookLevel/svg/bookLevel_g.svg">
+    <img id="H" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="H" src="../../../../assets/icons/BookLevel/svg/bookLevel_h.svg">
+    <img id="I" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="I" src="../../../../assets/icons/BookLevel/svg/bookLevel_i.svg">
+    <img id="J" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="J" src="../../../../assets/icons/BookLevel/svg/bookLevel_j.svg">
+    <img id="K" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="K" src="../../../../assets/icons/BookLevel/svg/bookLevel_k.svg">
+    <img id="L" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="L" src="../../../../assets/icons/BookLevel/svg/bookLevel_l.svg">
+    <img id="M" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="M" src="../../../../assets/icons/BookLevel/svg/bookLevel_m.svg">
+    <img id="N" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="N" src="../../../../assets/icons/BookLevel/svg/bookLevel_n.svg">
+    <img id="O" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="O" src="../../../../assets/icons/BookLevel/svg/bookLevel_o.svg">
+    <img id="P" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="P" src="../../../../assets/icons/BookLevel/svg/bookLevel_p.svg">
+    <img id="Q" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="Q" src="../../../../assets/icons/BookLevel/svg/bookLevel_q.svg">
+    <img id="R" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="R" src="../../../../assets/icons/BookLevel/svg/bookLevel_r.svg">
+    <img id="S" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="S" src="../../../../assets/icons/BookLevel/svg/bookLevel_s.svg">
+    <img id="T" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="T" src="../../../../assets/icons/BookLevel/svg/bookLevel_t.svg">
+    <img id="U" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="U" src="../../../../assets/icons/BookLevel/svg/bookLevel_u.svg">
+    <img id="V" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="V" src="../../../../assets/icons/BookLevel/svg/bookLevel_v.svg">
+    <img id="W" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="W" src="../../../../assets/icons/BookLevel/svg/bookLevel_w.svg">
+    <img id="X" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="X" src="../../../../assets/icons/BookLevel/svg/bookLevel_x.svg">
+    <img id="Y" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="Y" src="../../../../assets/icons/BookLevel/svg/bookLevel_y.svg">
+    <img id="Z" class="storybook-level-btn" (click)="changeStorybookLevel($event)" storybookLevel="Z" src="../../../../assets/icons/BookLevel/svg/bookLevel_z.svg">
+</div>
+
+<div *ngFor="let storyBook of currentDisplayStorybookObjects" class="book-container" [attr.data-readinglevel]="storyBook.storybookReadingLevel" >
+    
+    <div class="image-container">
+        <img *ngIf="storyBook.coverImagePath" src="{{storyBook.coverImagePath}}" alt="" class="storybook-cover-image" (click)="storybookImageClicked(storyBook)"  />
+        <img *ngIf="!storyBook.coverImagePath" src="../../../../assets/imgs/sample.png" alt="" class="storybook-cover-image" (click)="storybookImageClicked(storyBook)"/>
+    </div>
+
+    <div class="book-title border-left-right-bottom">
+        <span>{{storyBook.storyName}}</span>
+    </div>
+    
+    <div class="book-level border-left-right-bottom">
+        <span>Level: </span>
+        <img src="{{bookLevelImage}}" class="storybook-level-img"/>
+    </div>
+
+    <div class=" book-btn-container border-left-right-bottom">
+
+        <!-- audio icon (non clickable)-->
+        <img src="../../../../assets/icons/BookCard/svg/volume_1.svg" class="book-audio-icon">
+
+        <img src="../../../../assets/icons/BookCard/svg/book_3.svg" *ngIf="storyBook.storyCompleted && !storyBook.inProgressStorySessionId" class="book-btn" (click)="showStory(storyBook)" [disabled]="!storyBook.playable">
+
+        <img src="../../../../assets/icons/BookCard/svg/book_2.svg" *ngIf="storyBook.inProgressStorySessionId" class="book-btn" (click)="showStory(storyBook)" [disabled]="!storyBook.playable">
+        <img src="../../../../assets/icons/BookCard/svg/book_1.svg" *ngIf="!storyBook.inProgressStorySessionId && !storyBook.storyCompleted" class="book-btn" (click)="showStory(storyBook)" [disabled]="!storyBook.playable">
+        <img src="../../../../assets/icons/BookCard/svg/quiz_3.svg" *ngIf="storyBook.quizCompleted && !storyBook.inProgressQuizSessionId" class="book-btn" (click)="showQuiz(storyBook)" [quiz]="storyBook.quiz" [disabled]="!storyBook.playable">
+        <img src="../../../../assets/icons/BookCard/svg/quiz_2.svg" *ngIf="storyBook.inProgressQuizSessionId" class="book-btn" (click)="showQuiz(storyBook)" [quiz]="storyBook.quiz" [disabled]="!storyBook.playable">
+        <img src="../../../../assets/icons/BookCard/svg/quiz_1.svg" *ngIf="!storyBook.inProgressQuizSessionId && !storyBook.quizCompleted" class="book-btn" (click)="showQuiz(storyBook)" [quiz]="storyBook.quiz" [disabled]="!storyBook.playable">
+
+    </div>
+</div>

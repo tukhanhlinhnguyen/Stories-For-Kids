@@ -1,0 +1,158 @@
+@import '../../sass/themes/colors';
+@import '../../sass/utils/variables';
+@import url(https://fonts.googleapis.com/css?family=Cairo:400,500,700);
+
+.prev {
+  position: fixed;
+  float: left;
+  z-index: 1000;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+  width: 3%;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  background-color: #007bff !important;
+}
+
+.carousel {
+  .carousel-item {
+    visibility: visible !important;
+    width: 100% !important;
+  }
+
+  .carousel-inner {
+    overflow: visible;
+  }
+}
+
+
+.wrapper {
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+  @media screen and (min-width: $breakpoint-md) {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    min-width: calc(#{$breakpoint-md} - 50px);
+  }
+
+  h1 {
+    font-family: Cairo;
+    text-align: right;
+    font-size: 48px;
+    line-height: 48px;
+  }
+}
+
+.word-span {
+  // white-space: pre-wrap;
+  white-space: nowrap;
+}
+
+.card1 {
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgb(0 0 0 / 30%);
+
+  .story-image {
+    min-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+
+    img {
+      width: 100%;
+      min-height: 50%; /* YA211006 so even img is still empty loading, we don't have border shrank to a line */
+      border: 1px solid black;
+    }
+  }
+
+  .story {
+    padding: 24px 24px;
+
+    white-space:pre-wrap;
+
+    p {
+      /* font-size: 32px; */
+      font-size: 30px;
+      font-weight: 500;
+      text-align: right;
+      /* line-height: 48px; */
+      line-height: 55px;
+      word-wrap: break-word;
+      font-family: Cairo;
+      direction: rtl;
+    }
+  }
+
+  .page-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    background-color: map-get($palette-primary, 500);
+    width: 30px;
+    height: 50px;
+    border-radius: 10px;
+    position: absolute;
+    margin-left: -47px;
+    margin-top: -50px;
+  }
+
+  .play-audio-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin-left: 3px;
+    margin-top: -50px;
+    right: 0;
+  }
+}
+
+@media screen and (min-width: $breakpoint-md) {
+  .card1 {
+    padding: 52px 50px;
+    display: flex;
+    justify-content: space-between;
+
+    .story-image {
+      min-width: unset;
+      width: 38%;
+      max-width: 400px;
+      margin: 0;
+    }
+
+    .story {
+      width: 58%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+}
+
+.audio {
+  display: none;
+}
+
+// YA211006 to push the spinner to the right in a flex
+/* .push {
+  margin-left: auto;
+} */
+
+// YA211007 to next/prev arrows at same top position
+.carousel-control-next {
+  align-items: start;
+  top: 100px;
+}
+
+.carousel-control-prev {
+  align-items: start;
+  top: 100px;
+}

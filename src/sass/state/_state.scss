@@ -1,0 +1,15 @@
+.is-hidden {
+	display: none !important;
+}
+
+.noselect {
+	@include disable-text-selection();
+}
+
+.alert-danger {
+    color: red;
+}
+
+.no-scroll {
+	overflow: hidden;
+}

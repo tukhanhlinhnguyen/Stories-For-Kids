@@ -1,0 +1,21 @@
+html {
+	box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+div, section {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	width: 100%;
+	margin: 0px;
+	word-break: break-word;
+}
+

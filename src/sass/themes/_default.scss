@@ -1,0 +1,77 @@
+// Define a custom typography config that overrides the font-family as well as the
+// `headlines` and `body-1` levels.
+$custom-typography: mat-typography-config(
+  $headline:      mat-typography-level(32px, 2rem, 400), // <h1>
+  $title:         mat-typography-level(28px, 36px, 400), //<h2>
+  $subheading-2:  mat-typography-level(20px, 32px, 400), //<h3>
+  $subheading-1:  mat-typography-level(18px, 30px, 400), //<h4>
+  $body-2:        mat-typography-level(16px, 1.5, 400), // paragraph body
+  $body-1:        mat-typography-level(16px, 1.25, 400)  // slightly packed text
+);
+
+// Include non-theme styles for core.
+// Be sure that you only ever include this mixin once!
+@include mat-core($custom-typography);
+
+/* For use in src/lib/core/theming/_palette.scss */
+
+
+// creating palettes from color config (map of colors)
+/* $palette-primary: mat-palette($palette-purple);
+$palette-accent:  mat-palette($palette-pink); */
+
+
+// include the custom theme components into a theme object
+$light-theme: mat-light-theme($palette-primary, $palette-accent);
+
+// include the custom theme object into the angular material theme
+@include angular-material-theme($light-theme);
+
+$primary: mat-color($palette-primary);
+$accent: mat-color($palette-accent);
+$warn: mat-color($palette-warn);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* // Define a theme.
+$primary: mat-palette($mat-red, 700);
+$primary-color: mat-palette($mat-red, 700);
+$primary-color: red;
+// $accent:  mat-palette($mat-pink, A200, A100, A400);
+$accent:  mat-palette($mat-blue, 700, 500, 900);
+
+$theme: mat-light-theme($primary, $accent);
+
+// Include all theme styles for the components.
+@include angular-material-theme($theme); */
+
+
+/* .primary {
+    background-color: $primary-color;
+} */

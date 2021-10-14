@@ -1,0 +1,90 @@
+<div  ng2FileDrop (fileOver)="cloudinaryService.fileOverBase($event)" class="container upload-question-container">
+<form [formGroup]="addQuestionForm" (ngSubmit)="onSubmit(addQuestionForm)">
+    <h3>> Please Select a Story :</h3>
+    <div class="form-group">
+        <mat-form-field appearance="fill">
+            <mat-label>Select Storybook:</mat-label>
+            <mat-select formControlName="storybookId">
+            <mat-option *ngFor="let storybook of storybooks" [value]="storybook.storybookId">
+                {{storybook.storyName}}
+            </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>  
+    <div class="form-group">
+        <label for="question">Question:</label>
+        <input type="text" class="form-control" formControlName="question" />
+        <div class="alert alert-danger" *ngIf="addQuestionForm.controls.question.touched && addQuestionForm.controls.question.invalid">Question is required</div>
+    </div>
+    <div class="form-group">
+        <label for="answer1">Answer Option #1:</label>
+        <input type="text" class="form-control" formControlName="answer1"/>
+        <div class="alert alert-danger" *ngIf="addQuestionForm.controls.answer1.touched && addQuestionForm.controls.answer1.invalid">Answer option 1 is required</div>
+    </div>
+    <div class="form-group">
+        <label for="answer2">Answer Option #2:</label>
+        <input type="text" class="form-control" formControlName="answer2"/>
+        <div class="alert alert-danger" *ngIf="addQuestionForm.controls.answer2.touched && addQuestionForm.controls.answer2.invalid">Answer option 2 is required</div>
+    </div>
+    <div class="form-group">
+        <label for="answer3">Answer Option #3:</label>
+        <input type="text" class="form-control" formControlName="answer3"/>
+        <div class="alert alert-danger" *ngIf="addQuestionForm.controls.answer3.touched && addQuestionForm.controls.answer3.invalid">Answer option 3 is required</div>
+    </div>
+    <div class="form-group">
+        <label for="answer4">Answer Option #4:</label>
+        <input type="text" class="form-control" formControlName="answer4"/>
+        <div class="alert alert-danger" *ngIf="addQuestionForm.controls.answer4.touched && addQuestionForm.controls.answer4.invalid">Answer option 4 is required</div>
+    </div>
+    <div class="form-group">
+        <mat-form-field appearance="fill">
+            <mat-label>Select Correct Answer:</mat-label>
+            <mat-select formControlName="correctAnswer">
+            <mat-option *ngFor="let answerOption of answerOptions" [value]="answerOption">
+                {{answerOption}}
+            </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div> 
+ 
+    <!-- Cloudinary code start -->
+    <div id="direct_upload" ng2FileDrop [uploader]="cloudinaryService.uploader" (fileOver)="cloudinaryService.fileOverBase($event)" [ngClass]="{'nv-file-over': cloudinaryService.hasBaseDropZoneOver}">
+        <h3>> Please Upload an Image for the question :</h3>
+        <form>
+            <div class="form_line">
+                <div class="form_control">
+                    <div class="upload_button_holder file-path-wrapper">
+                        <input type="file" id="fileupload" class="" #fileInput ng2FileSelect  [uploader]="cloudinaryService.uploader" (change)="fileInput.value=''"
+                            />
+                    </div>
+    
+                </div>
+            </div>
+        </form>
+        <br>
+        <h4>Image upload status</h4>
+        <div class="file" *ngFor="let response of cloudinaryService.responses; let i = index">
+            <h3>{{response.file.name}}</h3>
+        <button class="delete-image" *ngIf="!!response.data.delete_token" (click)="cloudinaryService.deleteImage(response.data, i)">Delete image</button>
+            <div class="status">
+                Uploading... {{response.progress}}%
+                <div *ngIf="!response.status">In progress</div>
+                <div class="status-code" *ngIf="response.status">Upload completed with status code {{response.status}}</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" role="progressbar" [style.width.%]="response.progress"></div>
+            </div>
+            <div class="form_line">
+                <div class="form_controls">
+                    <div class="preview">
+                    </div>
+                </div>
+            </div>
+         
+        </div>
+    
+    </div>
+    <div class="mb-16"></div>
+    <button type="submit" class="btn btn-default white-btn" [disabled]="addQuestionForm.invalid || !cloudinaryService.imageUploaded">Submit Question</button>
+</form>
+</div>

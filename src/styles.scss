@@ -1,0 +1,79 @@
+@import '~@angular/material/_theming.scss';
+
+/* You can add global styles to this file, and also import other style files */
+
+@import 'sass/themes/colors';
+@import 'sass/themes/_default.scss';
+@import 'sass/utils/_mixins.scss';
+@import 'sass/utils/_variables.scss';
+@import 'sass/modules/_modules';
+@import 'sass/modules/bordered-container';
+@import 'sass/modules/application-list';
+@import 'sass/modules/dashboard';
+@import 'sass/modules/selection';
+@import 'sass/modules/form';
+@import 'sass/layouts/layout';
+@import 'sass/layouts/spacing';
+@import 'sass/layouts/flex';
+@import 'sass/layouts/containers';
+@import 'sass/pages/organizations';
+@import 'sass/state/state';
+@import 'sass/base/normalize';
+@import 'sass/base/typography';
+@import 'sass/base/background-colors';
+@import 'sass/base/font-family';
+@import 'sass/base/base';
+@import 'sass/base/size';
+@import 'sass/base/material-lib-override';
+
+// for stcky footer
+html { 
+    min-height: 100%; 
+    box-sizing: border-box;
+}
+
+body { 
+    min-height: 100vh; 
+    position: relative;
+    // min-height: 100%;
+    margin: 0;
+    padding-bottom: 250px;
+}
+
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+input[type='submit']{
+    
+    background-color: #6155A1;
+}
+input[type='submit']:hover{
+    background-color: #6155A1;
+}
+button{
+    background-color: #6155A1 !important;
+}
+
+.in-progress-icons {
+    width: 25%;
+}
+
+.in-progress-icon-container {
+    text-align: center;
+}
+
+.in-progress-container-items-list {
+    list-style-type: none;
+}
+
+.mat-card-in-progress-card {
+    height: 43vh;
+}

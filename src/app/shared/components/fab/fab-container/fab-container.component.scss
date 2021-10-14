@@ -1,0 +1,22 @@
+.fab-container {
+    position: fixed;
+    z-index: 1;
+    bottom: 18px;
+    right: 8px;
+    user-select: none; /* todo:: use sass mixin */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.fab-container > * {
+    width: fit-content;
+}
+
+.fab-direction-row {
+    flex-direction: row;
+}
+
+.fab-container.col > *.fab {
+    margin-bottom: 10px;
+}

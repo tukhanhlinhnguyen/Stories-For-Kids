@@ -1,0 +1,18 @@
+<!-- <mat-grid-list cols="7">
+  <mat-grid-tile>
+    <mat-grid-list cols="2" rowHeight="100px" class="example-container" [class.mat-elevation-z2]="true">
+      <mat-grid-tile>
+        <mat-icon aria-hidden="false" aria-label="Close" [ngStyle]="{'color': '#EA4D5B', fontSize: '2em'}">highlight_off
+        </mat-icon>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div [ngStyle]="{'color': '#EA4D5B'}">
+          La vérification du captcha a échoué.
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-grid-tile>
+</mat-grid-list> -->
+  
+<button mat-stroked-button (click)="openSnackBar('La vérification du captcha a échoué.', 'X')">Show snack-bar</button>
+  

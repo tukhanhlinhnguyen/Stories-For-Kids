@@ -1,0 +1,38 @@
+@import '../../../sass/themes/colors';
+@import '../../../sass/utils/variables';
+
+:host {
+    color: map-get($palette-accent, 500);
+}
+.footer-section{
+    //padding-left:600px;
+    display: flex;
+    height: 50px;
+}
+.logo {
+    padding-top: 7px;
+    padding-left : 678px;
+    width: 100%;
+    & > * {
+        width: 70px;
+    }
+}
+
+.social-icons {
+    display: flex;
+    margin-top: 7px;
+    & > * {
+        width: 32px;
+    }
+}
+
+@media screen and (min-width: $breakpoint-md) {
+    .subscribe-wrapper {
+        max-width: 66.67%;
+        max-width: 500px;
+    }
+}
+
+.small-print {
+    font-size: 8px;
+}

@@ -1,0 +1,91 @@
+<div class=form-container>
+    <div *ngIf="log" class="note-container">
+        <img class="login-note-logo" src="../../assets/Logo/svg/Logo_1.svg">
+        <h1>Today a reader Tomorrow a leader</h1>
+    </div>
+    <div *ngIf="log" class="login-container">
+        <h3>Sign in</h3>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin(loginForm.value)">
+            <input class="form-control col-sm-7" type="text" placeholder="Username" formControlName="loginUsername">
+            <br>
+            <input class="form-control col-sm-7" type="password" placeholder="Password" formControlName="password">
+            <br>
+            <input class="btn btn-success col-sm-7" type="submit" value="Login">
+        </form>
+        <br>
+        <a class="col-sm-1 col-md-2 col-lg-2" id="forgot-password-link" (click)="goToForgotPasswordPage()">Forgot Password?</a>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <span>Don't have an account?</span>
+        <a class="col-sm-1 col-md-2 col-lg-2" (click)="log = false; getRegisteredUsernames()" href="#">Sign up</a>
+    </div>
+
+    <div *ngIf="!log" class="note-container">
+        <img  class="register-note-logo" src="../../assets/Logo/svg/Logo_1.svg">
+        <h1>Today a reader Tomorrow a leader</h1>
+    </div>
+    <div *ngIf="!log" class="register-container">
+        <h3>Register</h3>
+
+        <!-- <form [formGroup]="regForm" (ngSubmit)="onSubmitReg(regForm.value)"> -->
+        <form [formGroup]="regForm" (ngSubmit)="onSubmitReg(regForm)">            
+            <input class="form-control col-sm-7" type="text" placeholder="Username" formControlName="username">
+            <!-- [errorStateMatcher]="duplicateUsernameMatcher(registeredUsernames, reg.username.value)" -->
+            <span *ngIf="reg.username.touched && reg.username.errors?.required"
+            class="help-block alert-danger">Username is Required!</span>
+            <span *ngIf="reg.username.errors?.duplicate"
+            class="help-block alert-danger">Username already taken! Please pick another one...</span>
+            <!-- reg.username.touched &&  -->
+            <br>
+            <input class="form-control col-sm-7" type="email" placeholder="Email" formControlName="email" />
+            <span *ngIf="reg.email.touched && reg.email.errors?.required"
+            class="help-block alert-danger">Email is Required!</span>
+            <span *ngIf="reg.email.touched && reg.email.errors?.email"
+            class="help-block alert-danger">Email must be valid!</span>
+            <br>
+            <input class="form-control col-sm-7" type="password" placeholder="Password" formControlName="password">
+            <span *ngIf="reg.password.touched && reg.password.errors?.required"
+            class="help-block alert-danger">Password is Required!</span>
+            <br>
+            <input class="form-control col-sm-7" type="password" placeholder="Confirm password" formControlName="password2">
+            <span *ngIf="reg.password2.touched && reg.password2.errors?.required"
+            class="help-block alert-danger">Confirm Password is Required!</span>
+            <span
+            *ngIf="reg.password2.errors?.notMatching"
+            class="help-block alert-danger">Confirm Password does not match with password!</span>
+            <br>
+            <select class="form-control col-sm-7" type="text" placeholder="User Type" name="userType" formControlName="userType" >
+                <!-- [(ngModel)]="userType" -->
+                <option value="" selected disabled hidden>User Type</option>
+                <option [ngValue]="null" [disabled]="true" >Pick User Type</option>
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+            </select>
+            <br>
+            <select class="form-control col-sm-7" type="text" placeholder="Gender" name="gender" formControlName="gender" >
+                <!-- [(ngModel)]="userType" -->
+                <option value="" selected disabled hidden>Gender</option>
+                <option [ngValue]="null" [disabled]="true" >Select your gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <br>
+            <select class="form-control col-sm-7" type="text" placeholder="Avatar Type" name="avatarType" formControlName="avatarType" >
+                <!-- [(ngModel)]="userType" -->
+                <option value="" selected disabled hidden>Avatar Type</option>
+                <option [ngValue]="null" [disabled]="true" >Select your avatar type</option>
+                <option value="HUMAN">Human</option>
+                <option value="ROBOT">Robot</option>
+            </select>
+            <br>
+            <input class="btn btn-success col-sm-7" type="submit" value="register" [disabled]="regForm.invalid"/>
+        </form>
+        <br>
+        <a class="col-sm-1 col-md-2 col-lg-2" (click)="log = true;" href="#">Back to Sign In Page</a>
+        <!-- <button class="btn btn-info purple-btn" (click)="log= true;">Go to Sign in page</button> -->
+    </div>
+</div>

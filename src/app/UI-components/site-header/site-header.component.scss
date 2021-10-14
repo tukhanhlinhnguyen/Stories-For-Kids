@@ -1,0 +1,263 @@
+@import '../../../sass/utils/mixins';
+@import '../../../sass/themes/colors';
+@import '../../../sass/utils/variables';
+
+$nav-item-height: 48;
+
+@mixin tool-bar {
+    width: 100%;
+    // height: 56px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+#app-bar {
+    @include tool-bar;
+    background-color: white;
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,.12), inset 0 -1px 0 0 #dadce0;
+    flex-wrap: wrap;
+}
+
+#app-bar-title {
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    margin-left: 15px;
+    /* display: flex; */
+    flex-grow: 1;
+    cursor: pointer;
+    // justify-content: center;
+    // align-items: center;
+    & > *{
+        width: 110px;
+    }
+}
+
+.nav-items {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    cursor: pointer;
+    width: 100%;
+    transition: max-height 250ms ease-in;
+    color: map-get($palette-gray, 500);
+
+    & > * {
+        padding-left: 16px;
+        display: flex;
+        align-items: center;
+        height: $nav-item-height * 1px;
+    }
+
+    & > *:hover {
+        background-color: map-get($palette-gray, 100);
+    }
+
+    & > *:focus, & > *:active {
+        background-color: map-get($palette-gray, 200);
+    }
+
+    &.visible {
+        // VERY IMPORTANT: $nav-item-height should be multiplied by th number of nav items.
+        // This max-height value had to be hard-coded because of with: auto does not animate.
+        max-height: $nav-item-height * 3px; 
+    }
+
+/* BEGIN OF NAVBAR STYLES */
+    // li:click ul{ 
+    //     display:block;
+    // }
+
+    // li ul {
+    //     position: fixed;
+    //     left: 95vw;
+    //     top: 10vh;
+    //     display: none;
+    //     padding: 0;  
+    // }
+
+    .navbar-relative-container { 
+        position: relative;
+    }
+
+   
+
+    // .navbar_profile_img {
+    //     width: 45px;
+    // }
+
+    // nav {
+    //     margin:0 auto;
+    //     width:100%;
+    //     height:auto;
+    //     display:inline-block;
+    //     background:#37bc9b;
+    // }
+      
+    // nav ul {
+    //     margin:0;padding:0;
+    //     list-style-type:none;
+    //     float:left;
+    //     display:inline-block;
+    // }
+    
+    // nav ul li {
+    //     position:relative;
+    //     margin:0 20px 0 0;
+    //     float:left;
+    //     display:inline-block;
+    // }
+      
+    // li > a:after { content: ' »'; } /* Change this in order to change the Dropdown symbol */
+    
+    // li > a:only-child:after { content: ''; }
+    
+    // nav ul li a {
+    //     padding:20px;
+    //     display:inline-block;
+    //     color:white;
+    //     text-decoration:none;
+    // }
+      
+    // nav ul li a:hover {
+    //     opacity:0.5;
+    // }
+      
+    // nav ul li ul {
+    //     display:none;
+    //     position:absolute;
+    //     left:0;
+    //     background:#37bc9b;
+    //     float:left;
+    // }
+      
+    // nav ul li ul li {
+    //     width:100%;
+    //     border-bottom:1px solid rgba(255,255,255,.3);
+    // }
+      
+    // nav ul li:hover ul {
+    //     display:block;
+    // }
+
+    /* END OF NAVBAR STYLES */
+}
+
+.navbar-profile-dropdown-section {
+    // display: block;
+    position: fixed;
+    // display: none;
+    list-style-type: none;
+    background-color: rgb(249, 249, 249);
+    // min-width: 200px;
+    width: 20vw;
+    // min-height: 300px;
+    padding: 15px;
+    box-shadow: rgb(0 0 0 / 20%) 0px 8px 16px 0px;
+    z-index: 1;
+    // left: 80vw;
+    right: 0vw;
+    top: 5.5vh;
+
+    .navbar-dropdown-profile-info {
+        min-height: 100px;
+        display: flex;
+        .profile-info-username {
+            padding-left: 10%;
+            font-weight: bolder;
+            font-size: x-large;
+            color: inherit;
+            text-decoration: none;
+        }
+    }
+}
+
+.navbar-profile-dropdown-profile-image {
+    width: 10%;
+    border-radius: 50px;
+}
+
+.top-bar {
+    margin-bottom: 2px;
+
+    .profile-btn {
+        background-color: #FF7622 !important;
+    }
+}
+
+
+.navbar-dropdown-btn {
+    width: 100%;
+}
+
+.exp-points-image{
+    width: 25px;
+    margin-left: 5px;
+    padding-bottom: 5px;
+}
+
+.reading-level-img{
+    width: 25px;
+    height: 25px;
+    margin-left: 5px;
+    padding-bottom: 5px;
+}
+
+#foo {
+    height: 56px;
+    width: 100%;
+}
+
+#navbar-profile-btn {
+    color: inherit;
+    text-decoration: none;
+}
+
+@media  screen and (min-width: $breakpoint-md) {
+    #app-bar {
+        @include tool-bar;
+        background-color: white;
+        box-shadow: 0 2px 6px 0 rgba(0,0,0,.12), inset 0 -1px 0 0 #dadce0;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+
+    .nav-items {
+        max-height: unset;
+        width: auto;
+        display: flex;
+        flex-basis: 75%;
+        justify-content: end;
+        align-items: center;
+        & > * {
+            height: 100%;
+            padding-left: 16px;
+            display: flex;
+            align-items: center;
+            // height: $nav-item-height * 1px;
+        }
+    
+        & > *:hover {
+            color: map-get($palette-gray, 700);
+            background-color: transparent;
+        }
+    
+        & > *:focus, & > *:active {
+            color: map-get($palette-gray, 800);
+            background-color: transparent;
+        }
+    }
+
+    #foo {
+        width: unset;
+    }
+
+    #menu-button {
+        display: none;
+    }
+}

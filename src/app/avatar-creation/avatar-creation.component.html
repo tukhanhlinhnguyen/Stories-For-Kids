@@ -1,0 +1,98 @@
+<div class="container">
+    <div class="main-body">
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card avatar-creation-container">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <h1>Avatar Creation Page</h1>
+                    <p *ngIf="userAvatarStatus == 'USE_EXISTING'">Edit your current avatar: </p>
+                    <p *ngIf="userAvatarStatus == 'CREATE_NEW'">You don't have an avatar yet. Here is a randomly generated avatar that you can customize. Once you're finished just click 'Save'</p>
+                    <mat-spinner *ngIf="loading"></mat-spinner>
+                    <div *ngIf="!loading" id="svg-container" [innerHTML]="safeAvatarSVG"></div>
+                    <!--    -->
+                    <div class="mt-3">            
+                      <div class="secondary-selection-container" id="secondary-selection-container">
+                      </div>
+                      <div *ngIf="avatarType == 'HUMAN'" class="primary-selection-container">
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="avatarType">
+                          <mat-icon class="vertical-align-middle">account_circle</mat-icon> Avatar Type
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="top">
+                          <mat-icon class="vertical-align-middle">face</mat-icon> Top
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="hairColor">
+                          <mat-icon class="vertical-align-middle">palette</mat-icon> Hair Color
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="facialHair">
+                          <mat-icon svgIcon="facial-hair" class="vertical-align-middle"></mat-icon> Facial Hair
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="facialHairColor">
+                          <mat-icon class="vertical-align-middle">palette</mat-icon> Facial Hair Color
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="accessories">
+                          <mat-icon svgIcon="accessories-icon" class="vertical-align-middle"></mat-icon> Accessories
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="accessoriesColor">
+                          <mat-icon class="vertical-align-middle">palette</mat-icon> Accessories Color
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="clothes">
+                          <mat-icon class="vertical-align-middle">checkroom</mat-icon> Clothing
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="clothesColor">
+                          <mat-icon class="vertical-align-middle">palette</mat-icon> Clothing Color
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="clotheGraphics">
+                          <mat-icon class="vertical-align-middle">checkroom</mat-icon> Clothing Graphics
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="eyes">
+                          <mat-icon svgIcon="eye-icon" class="vertical-align-middle"></mat-icon> Eyes
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="eyebrow">
+                          <mat-icon svgIcon="eyebrows-icon" class="vertical-align-middle"></mat-icon> Eyebrows
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="mouth">
+                          <mat-icon svgIcon="mouth-icon" class="vertical-align-middle"></mat-icon> Mouth
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="skin">
+                          <mat-icon class="vertical-align-middle">perm_identity</mat-icon> Skin
+                        </button>
+                        
+                      </div>
+                      <div *ngIf="avatarType == 'ROBOT'" class="primary-selection-container">
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="avatarType">
+                          <mat-icon class="vertical-align-middle">account_circle</mat-icon> Avatar Type
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="colors">
+                          <mat-icon class="vertical-align-middle">palette</mat-icon>  Colors
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="colorful">
+                          <mat-icon class="vertical-align-middle">palette</mat-icon>  Colorful
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="primaryColorLevel">
+                          <mat-icon class="vertical-align-middle">opacity</mat-icon> Primary Color Level
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="secondaryColorLevel">
+                          <mat-icon class="vertical-align-middle">opacity</mat-icon> Secondary Color Level
+                        </button>
+                        <button class="btn btn-primary" (click)="addStyleButtonsToSecondarySelectionMenu($event)" attr-name="textureChance">
+                          <mat-icon class="vertical-align-middle">texture</mat-icon> Texture
+                        </button>
+                      </div>
+                      <button class="btn btn-primary"(click)="regenerateAvatarButtonClick()">
+                        <mat-icon class="vertical-align-middle">casino</mat-icon> Randomize Avatar
+                      </button>
+                      <button class="btn btn-primary" (click)="saveAvatar()">
+                        <mat-icon class="vertical-align-middle">save</mat-icon> Save
+                      </button>
+                      <button class="btn btn-primary" (click)="backToHome()">
+                        <mat-icon class="vertical-align-middle">home</mat-icon> Back To Home
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>

@@ -1,0 +1,119 @@
+<div  ng2FileDrop (fileOver)="cloudinaryService.fileOverBase($event)" class="container edit-story-container">
+    <form [formGroup]="editStoryForm" class="mx-auto">
+        <h4>Please Select a Storybook to Edit: </h4>
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Select Storybook:</mat-label>
+                <mat-select  (selectionChange)="setSelectedStorybook($event)">
+                <!-- formControlName="storybookId" -->
+                    <mat-option *ngFor="let storybook of storybooks" [value]="storybook.storybookId">
+                        {{storybook.storyName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>  
+        <mat-form-field appearance="outline" class="w-full" *ngIf="storybookSelected">
+            <mat-label>Update Story name</mat-label>
+            <input matInput placeholder="Story name" [formControl]="storyName" />
+            <mat-error *ngIf="(storyName.dirty || storyName.touched) && storyName.errors?.required">This field is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full" *ngIf="storybookSelected">
+            <mat-label>Update Storybook Level:</mat-label>
+            <mat-select [formControl]="storybookLevel" [value]="storybookLevel" (selectionChange)="setStorybookLevel($event)">
+                <mat-option value="aa">aa</mat-option>
+                <mat-option value="A">A</mat-option>
+                <mat-option value="B">B</mat-option>
+                <mat-option value="C">C</mat-option>
+                <mat-option value="D">D</mat-option>
+                <mat-option value="E">E</mat-option>
+                <mat-option value="F">F</mat-option>
+                <mat-option value="G">G</mat-option>
+                <mat-option value="H">H</mat-option>
+                <mat-option value="I">I</mat-option>
+                <mat-option value="J">J</mat-option>
+                <mat-option value="K">K</mat-option>
+                <mat-option value="L">L</mat-option>
+                <mat-option value="M">M</mat-option>
+                <mat-option value="N">N</mat-option>
+                <mat-option value="O">O</mat-option>
+                <mat-option value="P">P</mat-option>
+                <mat-option value="Q">Q</mat-option>
+                <mat-option value="R">R</mat-option>
+                <mat-option value="S">S</mat-option>
+                <mat-option value="T">T</mat-option>
+                <mat-option value="U">U</mat-option>
+                <mat-option value="V">V</mat-option>
+                <mat-option value="W">W</mat-option>
+                <mat-option value="X">X</mat-option>
+                <mat-option value="Y">Y</mat-option>
+                <mat-option value="Z">Z</mat-option>
+            </mat-select>
+            <mat-error *ngIf="(storybookLevel.dirty || storybookLevel.touched) && storybookLevel.errors?.required">This field is required</mat-error>
+        </mat-form-field>
+         
+    <div class="edit-story-upload-section-container">
+        <div class="upload-dialog-btn-container" *ngIf="storybookSelected">
+            <mat-label *ngIf="!selectedStorybook.storyUploaded">Select Story file: </mat-label>
+            <mat-label *ngIf="selectedStorybook.storyUploaded">Upload New Story file: </mat-label>
+            <small>* Must be a zip file (Required if you add a sound file)</small>
+            <button mat-button color="primary" (click)="storyFileUpload.click()" class="bg-primary-50 btn-width">
+                Select file<mat-icon class="ml-2">cloud_upload</mat-icon>
+            </button>
+            <span class="ellipsized mt-1 block text-gray-500 text-sm">{{this.storyFileUploadName || 'No file selected'}}</span>
+            <input #storyFileUpload type="file" hidden (change)="onStoryFileChange($event)"/>
+        </div>
+    
+
+        <div class="upload-dialog-btn-container" *ngIf="storybookSelected">
+            <mat-label *ngIf="!selectedStorybook.soundUploaded">Select Sound file: </mat-label>
+            <mat-label *ngIf="selectedStorybook.soundUploaded">Upload New Sound file: </mat-label>
+            <small>* Must be a zip file</small>
+            <button mat-button color="primary" (click)="soundFileUpload.click()" class="bg-primary-50 btn-width">
+                Select file<mat-icon class="ml-2">cloud_upload</mat-icon>
+            </button>
+            <span class="ellipsized mt-1 block text-gray-500 text-sm">{{this.soundFileUploadName || 'No file selected'}}</span>
+            <input #soundFileUpload type="file" hidden (change)="onSoundFileChange($event)"/>
+        </div>
+    </div>
+        <br>
+        <div id="direct_upload" ng2FileDrop [uploader]="cloudinaryService.uploader" (fileOver)="cloudinaryService.fileOverBase($event)" [ngClass]="{'nv-file-over': cloudinaryService.hasBaseDropZoneOver}" *ngIf="storybookSelected">
+            <div class="image-container">
+                <label for="storybook-cover-image">Current Cover Image: </label>
+                <img *ngIf="selectedStorybook.coverImagePath" src="{{selectedStorybook.coverImagePath}}" alt="" class="storybook-cover-image" name="storybook-cover-image"/>
+                <img *ngIf="!selectedStorybook.coverImagePath" src="../../../../assets/imgs/sample.png" alt="" class="storybook-cover-image" name="storybook-cover-image"/>
+            </div>
+            <br>
+            <form>
+                <div class="form_line">
+                    <div class="form_control">
+                        <div class="upload_button_holder file-path-wrapper">
+                            <!--<label class="upload_button" for="fileupload">Upload New Cover Image: </label>-->
+                            <h4>Upload New Cover Image:</h4>
+                            <small>* Must be an image file</small>
+                            <input type="file" id="fileupload" class="" #fileInput ng2FileSelect  [uploader]="cloudinaryService.uploader" (change)="fileInput.value=''"
+                                />
+                        </div>
+        
+                    </div>
+                </div>
+            </form>
+            <!-- <h4>Image upload status</h4> -->
+            <div class="file" *ngFor="let response of cloudinaryService.responses; let i = index">
+                <h3>{{response.file.name}}</h3>
+            <button class="delete-image" *ngIf="!!response.data.delete_token" (click)="cloudinaryService.deleteImage(response.data, i)">Delete image</button>
+                <div class="status">
+                    Uploading... {{response.progress}}%
+                    <div *ngIf="!response.status">In progress</div>
+                    <div class="status-code" *ngIf="response.status">Upload completed with status code {{response.status}}</div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-default edit-story-submit-btn" [disabled]="editStoryForm.invalid" (click)="onSubmit()">Update Story</button>
+        <br/>
+        <small *ngIf="0 < percentDone && percentDone < 100" class="progress-text">Progress: </small>
+        <mat-progress-bar *ngIf="0 < percentDone && percentDone < 100" mode="determinate" [value]="percentDone"></mat-progress-bar>
+
+</form>
+</div>

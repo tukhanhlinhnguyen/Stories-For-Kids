@@ -1,0 +1,5 @@
+<div class="fab fab-expanded" matRipple (click)="onClick($event)">
+    <ng-content select="[fab-icon]"></ng-content>
+    <div *ngIf="expanded" style="margin-right: 5px;"></div>
+    <ng-content *ngIf="expanded" select="[fab-label]"></ng-content>
+</div>

@@ -1,0 +1,150 @@
+.level-up-container{
+    display: block;
+    text-align: -webkit-center;
+    padding: 0px;
+    width: 100%;
+}
+
+footer{
+    position: fixed;
+    bottom: 0px;
+}
+
+table.this-week-table {
+  width: 100%;
+}
+::ng-deep .mat-expansion-panel-body {
+    padding: 0px !important;
+}
+.mat-expansion-panel {
+    margin: 20px;
+}
+
+.completed-activities-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    flex: 1;
+}
+
+.completed-activities-img {
+    width: 10em;
+    height: 10em;
+}
+
+.mat-card {
+    width: 275px;
+    height: 275px;
+}
+
+.student-level-info-container {
+    display: flex;
+    justify-content: space-around !important;
+    border-top-left-radius: 0px !important;
+
+}
+.student-level-info-container>h1 {
+    flex: 0 1 100%;
+  }
+
+.completed-activity-card:hover {
+    animation: pulse; /* referring directly to the animation's @keyframe declaration */
+    animation-duration: 1s
+}
+  
+.level-up-heading {
+    text-align: left;
+    border: none !important;
+}
+
+.level-up-heading-left {
+    text-align: left;
+    color: #6255a7;
+    border: none !important;
+}
+
+.level-up-chart-title {
+    margin: 0px;
+    color: #6255a7;
+}
+
+.level-up-text {
+    color: #6255a7;
+}
+
+.level-up-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 32px 20px;
+    //box-shadow:   0 6px 12px rgb(0 0 0 / 20%);
+}
+
+.level-up-heading {
+    margin-top: 10px;
+}
+
+.tab {   
+    padding: 0px;
+    
+}
+
+.tabs {
+    border-top-left-radius: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    height: 300px;
+    width: 80%;
+    height: 100%;
+    margin: 0px auto;
+    background-color: #F3E6DD;
+  }
+   
+  .tabs label {
+    order: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 2rem;
+    margin: 0px;
+    cursor: pointer;
+    background-color: #F3E6DD;
+    font-weight: bold;
+    transition: background ease 0.3s;
+  }
+   
+  .tabs .tab {
+    order: 9;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    display: none;
+    padding: 0px !important;
+    background-color: #F3E6DD;
+    padding: 20px;
+  }
+   
+  .tabs input[type="radio"] {
+    display: none;
+  }
+   
+  .tabs input[type="radio"]:checked + label {
+    background: #fff;
+  }
+   
+  .tabs input[type="radio"]:checked + label + .tab {
+    display: block;
+  }
+   
+  @media (max-width: 465px) {
+    .tabs .tab,
+    .tabs label {
+     order: initial;
+    }
+   
+    .tabs label {
+      width: 100%;
+      margin-left: 50px;
+    }
+  }

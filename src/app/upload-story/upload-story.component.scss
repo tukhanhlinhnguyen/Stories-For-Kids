@@ -1,0 +1,22 @@
+@import '../../sass/utils/variables';
+
+.wrapper {
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+    @media screen and (min-width: $breakpoint-md) {
+        margin-right: auto;
+        margin-left: auto;
+        width: 80%;
+        max-width: 800px;
+    }
+}
+
+div.button-group > button{
+    color: white !important;
+}
+
+#cdk-overlay-0 {
+    width: 60vw !important;
+}
+

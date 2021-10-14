@@ -1,0 +1,37 @@
+<div class="content-container">
+    <table *ngIf="audios && audios.length>0">
+        <thead>
+            <tr>
+                <th>{{storyName}} audios</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let audio of audios">
+                <td><span>{{audio}}</span></td>
+                <td><a target="_blank" href= "{{backendHost}}/stories/{{storyName}}/{{audio}}">link</a> </td>
+                <!-- <td><audio #ref1 id="audio-1" class="sub-audio-0" autoplay>
+                    <source src="{{backendHost}}/stories/{{storyName}}/{{audio}}" type="audio/mpeg">
+                    
+               </audio></td> -->
+            </tr>
+        </tbody>
+    </table>
+    <table *ngIf="images && images.length>0">
+        <thead>
+            <tr>
+                <th><span>{{storyName}} images</span></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+                <tr *ngFor="let image of images">
+                    <td>{{image}}</td>
+                    <td><a target="_blank" href= "{{backendHost}}/stories/{{storyName}}/{{image}}">link</a> </td>
+                    <!-- <td><img src="{{backendHost}}/stories/{{storyName}}/{{image}}" alt=""></td> -->
+                </tr>
+        </tbody>
+    </table>
+</div>

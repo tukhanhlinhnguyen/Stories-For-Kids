@@ -1,0 +1,52 @@
+<div id='quiz_gameplay_section' *ngIf="state === 'inProgress'">
+  <div *ngIf="quizService.isQuizReady" class="quiz-container">
+    <h4>Storybook Level: {{quizService.storybookReadingLevel}}</h4>
+    <h3 class='save_score_message'>Your score: {{quizService.quizScore}}</h3>
+    <h3>{{quizService.quizQuestionCounter - 1}} / {{quizService.quizLength}} Questions Done</h3>
+    
+    <mat-progress-bar mode="determinate" [value]="quizService.quizProgressValue" #quizProgressBar></mat-progress-bar>
+    
+    <div class="quiz-question-container">
+      <button id="questionAudioBtn" class="btn btn-secondary btn-play-question" (click)="playQuestionAudio($event)">
+        <mat-icon>volume_up</mat-icon>
+      </button>
+      <h2 *ngIf="quizService.quiz" id='current_question' #quizQuestion>
+        {{quizService.quiz.questions[quizService.quizProgress - 1].questionText}}</h2>
+    </div>
+    <div *ngIf="showAvatar" [innerHTML]="safeAvatarSVG" class="avatar-svg-container blink"></div>
+    <img *ngIf="quizService.quiz" id="quiz_image"
+      src="{{quizService.quiz.questions[quizService.quizProgress - 1].questionImage.imagePath}}" />
+    <div class="answer-options-audio-container">
+      <button id="answerOptionsAudioBtn" class="btn btn-secondary" (click)="playAnswerOptionsAudio($event)">
+        <mat-icon>volume_up</mat-icon>
+      </button>
+    </div>
+    <!-- <div class="answer-options-audio-container">
+            <button id="answerOptionsAudioBtn" class="btn btn-secondary" (click)="playAnswerOptionsAudio($event)"><mat-icon>volume_up<mat-icon></button>
+        </div> -->
+    <div *ngIf="quizService.quiz" class="answer-container" #answerContainer>
+      <button id="answerAudioBtn1" class="btn btn-secondary btn-play-answer" (click)="playSignleAnswerAudio(0)">
+        <mat-icon>volume_up</mat-icon>
+      </button>
+      <button id='answer1' #answer1 class='answer_link btn btn btn-secondary' (click)="submitAnswer($event.target)"
+        [attr.correctAnswer]="quizService.quiz.questions[quizService.quizProgress - 1].answers[0].correctAnswer">{{quizService.quiz.questions[quizService.quizProgress - 1].answers[0].answerText}}</button>
+      <button id="answerAudioBtn2" class="btn btn-secondary btn-play-answer" (click)="playSignleAnswerAudio(1)">
+        <mat-icon>volume_up</mat-icon>
+      </button>
+      <button id='answer2' #answer2 class='answer_link btn btn btn-secondary' (click)="submitAnswer($event.target)"
+        [attr.correctAnswer]="quizService.quiz.questions[quizService.quizProgress - 1].answers[1].correctAnswer">{{quizService.quiz.questions[quizService.quizProgress - 1].answers[1].answerText}}</button>
+      <button id="answerAudioBtn3" class="btn btn-secondary btn-play-answer" (click)="playSignleAnswerAudio(2)">
+        <mat-icon>volume_up</mat-icon>
+      </button>
+      <button id='answer3' #answer3 class='answer_link btn btn btn-secondary' (click)="submitAnswer($event.target)"
+        [attr.correctAnswer]="quizService.quiz.questions[quizService.quizProgress - 1].answers[2].correctAnswer">{{quizService.quiz.questions[quizService.quizProgress - 1].answers[2].answerText}}</button>
+      <button id="answerAudioBtn4" class="btn btn-secondary btn-play-answer" (click)="playSignleAnswerAudio(3)">
+        <mat-icon>volume_up</mat-icon>
+      </button>
+      <button id='answer4' #answer4 class='answer_link btn btn btn-secondary' (click)="submitAnswer($event.target)"
+        [attr.correctAnswer]="quizService.quiz.questions[quizService.quizProgress - 1].answers[3].correctAnswer">{{quizService.quiz.questions[quizService.quizProgress - 1].answers[3].answerText}}</button>
+    </div>
+  </div>
+</div>
+<app-quiz-end *ngIf="state === 'DONE'"></app-quiz-end>
+<!-- <script src="https://code.responsivevoice.org/responsivevoice.js?key=e5dGgiAW"></script> -->

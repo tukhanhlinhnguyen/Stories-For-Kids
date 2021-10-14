@@ -1,0 +1,47 @@
+.edit-story-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 32px 20px;
+    box-shadow:   0 6px 12px rgb(0 0 0 / 20%);
+}
+
+div.upload-dialog-btn-container > button{
+    color: white;
+}
+
+div.edit-story-upload-section-container > button{
+    color: white;
+}
+
+.storybook-cover-image {
+    height: 160px;
+    width: 120px;
+}
+
+.image-container {
+    display: grid;
+}
+
+.upload_button_holder, .upload-dialog-btn-container {
+    display: inline-grid;
+}
+
+.edit-story-upload-section-container {
+    display: flex;
+    column-gap: 10%;
+}
+
+.progress-text {
+    margin-top: 10px;
+}
+
+.edit-story-submit-btn {
+    margin-top: 10px;
+    color: white !important;
+}
+.btn-width{
+    width: 130px;
+}
+h4, label, mat-label{
+    color : #6155A1;
+}

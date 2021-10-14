@@ -1,0 +1,114 @@
+@import '~@angular/material/theming';
+
+$palette-primary: (
+    50 : #ecebf4,
+    100 : #d0cce5,
+    200 : #b1aad3,
+    300 : #9188c1,
+    400 : #7a6fb4,
+    500 : #6255a7,
+    600 : #5a4e9f,
+    700 : #504496,
+    800 : #463b8c,
+    900 : #342a7c,
+    A100 : #c8c1ff,
+    A200 : #9a8eff,
+    A400 : #6d5bff,
+    A700 : #5641ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$palette-accent: (
+    50 : #fefcfb,
+    100 : #fbf8f5,
+    200 : #f9f3ee,
+    300 : #f7eee7,
+    400 : #f5eae2,
+    500 : #f3e6dd,
+    600 : #f1e3d9,
+    700 : #efdfd4,
+    800 : #eddbcf,
+    900 : #ead5c7,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #ffffff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$palette-warn: mat-palette($mat-red);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$palette-gray: (
+    50: rgb(249, 250, 251),
+    100: rgb(243, 244, 246),
+    200: rgb(229, 231, 235),
+    300: rgb(209, 213, 219),
+    400: rgb(156, 163, 175),
+    500: rgb(107, 114, 128),
+    600: rgb(75, 85, 99),
+    700: rgb(55, 65, 81),
+    800: rgb(31, 41, 55),
+    900: rgb(17, 24, 39),
+);
+
+$warn: (
+    50: map-get($mat-red, 50),
+    100: map-get($mat-red, 100),
+    200: map-get($mat-red, 200),
+    300: map-get($mat-red, 300),
+    400: map-get($mat-red, 400),
+    500: map-get($mat-red, 500),
+    600: map-get($mat-red, 600),
+    700: map-get($mat-red, 700),
+    800: map-get($mat-red, 800),
+    900: map-get($mat-red, 900),
+);

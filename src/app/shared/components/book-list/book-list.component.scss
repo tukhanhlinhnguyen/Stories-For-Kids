@@ -1,0 +1,136 @@
+@import '../../../../sass/utils/variables';
+
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  /* gap: 22%; */
+  gap: 10%;
+  justify-content: center;
+}
+
+.book-container {
+  //flex: 1 20%;
+  max-width: 40%;
+  /* max-height: 40%; */
+  //padding: 20px 10px;
+  margin-top: 15px;
+  margin-bottom: 85px;
+  //border: 2px solid;
+  //border-image: linear-gradient(45deg, turquoise, greenyellow,) 1;
+}
+
+.white-btn {
+  background-color: white !important;
+}
+
+.storybook-level-btn-container {
+  margin: 0px;
+  width: 100%;
+}
+
+.storybook-level-btn {
+  margin-right: 5px;
+  margin-top: 5px;
+  width: 35px;
+  cursor: pointer;
+  background-color: transparent;
+  transition: transform 200ms cubic-bezier(0.58, -1.46, 0.65, 2.57);
+
+  &:hover,
+  &:focus,
+  &:active {
+    transform: scale(1.2);
+    //box-shadow: rgb(38, 57,77) 0px 20px 30px -10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  }
+}
+
+.storybook-cover-image {
+  //height: 160px;
+  cursor: pointer;
+}
+
+.storybook-level-img {
+  width: 20px
+}
+
+/*@media screen and (min-width: $breakpoint-md) {
+    :host{
+        gap: 14%;
+    }
+
+    .book-container {
+        flex: 1 24%;
+        padding: 20px 10px;
+        max-width: 22%;
+    }
+}
+
+@media screen and (min-width: $breakpoint-xl) {
+    :host{
+        gap: 12%;
+    }
+
+    .book-container {
+        flex: 1 16%;
+        max-width: 16%;
+    }
+}*/
+
+.image-container {
+  overflow: hidden;
+
+  img {
+    width: 100%;
+  }
+}
+
+.book-btn-container {
+  display: flex;
+  min-height: 50px;
+  align-items: center;
+}
+
+.book-title {
+  font-family: $font-title;
+  text-align: center;
+  padding-top: 10px;
+  font-weight: 600;
+  font-size: 24px;
+  min-height: 50px;
+}
+
+.book-level {
+  font-family: $font-title;
+  text-align: center;
+  font-size: 20px;
+  min-height: 25px;
+
+  &>img {
+    width: 25px;
+    padding-bottom: 8px;
+  }
+}
+
+.book-btn {
+  cursor: pointer;
+  width: 40px;
+  margin: 0px auto;
+
+  &:active {
+    background-color: #ffe08a;
+    border-radius: 50%;
+  }
+}
+
+.book-audio-icon {
+  width: 40px;
+  margin: 0px auto;
+}
+
+.border-left-right-bottom {
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+  border-image: linear-gradient(45deg, turquoise, greenyellow, ) 1;
+}

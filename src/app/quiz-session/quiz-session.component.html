@@ -1,0 +1,30 @@
+<h1 class="card-title table-card-title">Quiz Sessions</h1>
+<div class="table-card" *ngIf="tableReady">
+    <table>
+        <tr>
+            <th *ngFor="let column of displayedColumns">
+                {{column}}
+            </th>
+        </tr>
+        <tr *ngFor="let row of pageOfItems">
+            <td class="arabic-story-name">
+                {{row.storybook_name}}
+            </td>
+            <td *ngIf="row.studentUsername">
+                {{row.studentUsername}}
+            </td>
+            <td *ngIf="!row.studentUsername">
+                Teacher
+            </td>
+            <td>
+                {{row.quizScore}}
+            </td>
+            <td>
+                {{row.createdDate | date}}
+            </td>
+        </tr>
+    </table>
+    <div class="pag-card">
+        <jw-pagination [items]="quizSessions" (changePage)="onChangePage($event)"></jw-pagination>
+    </div>
+</div>

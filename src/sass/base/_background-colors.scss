@@ -1,0 +1,31 @@
+@each $key, $value in $palette-gray {
+	@if type-of($value) == color {
+		.bg-gray-#{$key} {
+			background-color: $value;
+		}
+	}
+}
+
+@each $key, $value in $palette-primary {
+	@if type-of($value) == color {
+		.bg-primary-#{$key} {
+			background-color: $value;
+		}
+	}
+}
+
+@each $key, $value in $palette-accent {
+	@if type-of($value) == color {
+		.bg-accent-#{$key} {
+			background-color: $value;
+		}
+	}
+}
+
+@each $key, $value in $palette-warn {
+	@if type-of($value) == color {
+		.bg-warn-#{$key} {
+			background-color: $value;
+		}
+	}
+}

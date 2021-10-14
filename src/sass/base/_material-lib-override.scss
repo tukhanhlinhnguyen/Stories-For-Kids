@@ -1,0 +1,4 @@
+// prevents mat-hint element content from overlapping content below it
+.mat-form-field-subscript-wrapper {
+    position: static !important;
+}

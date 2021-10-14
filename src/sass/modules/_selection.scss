@@ -1,0 +1,4 @@
+.selection-dialog-container .mat-dialog-container {
+    padding: 0;
+    overflow: hidden; /* this prevents the unexpected side scrolling of dialog content */
+}

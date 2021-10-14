@@ -1,0 +1,25 @@
+.content-container{
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+tbody{
+    display: block;
+    height: 200px;
+    overflow-y: scroll;
+  }
+
+td{
+    margin:5px;
+    width:fit-content;
+}
+
+h3, span{
+    margin:5px;
+    width:190px;
+}
+

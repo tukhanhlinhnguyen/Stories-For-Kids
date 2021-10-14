@@ -1,0 +1,18 @@
+<div class="hero-card" *ngIf="storyReady">
+    <mat-card class="mat-card-in-progress-card">
+        <mat-card-title>You have an In Progress Story!</mat-card-title>
+        <div class="mb-8 in-progress-icon-container">
+            <img src="./assets/imgs/inProgressQuizIcon.jpg" class="in-progress-icons"/>
+        </div>
+        <mat-card-content>
+            <ul class="in-progress-container-items-list">
+                <li>Storybook: {{inProgressStory.storybookName}}</li>
+                <li>Page number: {{inProgressStory.stoppedOnPageNumber}}</li>
+                <li> </li>
+                <li><button (click)="goToStory()" class="btn btn-primary">Complete Story</button></li>
+            </ul>
+          </mat-card-content>
+
+
+    </mat-card>
+</div>

@@ -1,0 +1,22 @@
+@import '../../../../../sass/themes/colors';
+
+.fab {
+    display: flex;
+    box-shadow: 0px 2px 6px 0px rgba(0,0,0,.2);
+    height: 54px;
+    border-radius: 27px;
+    align-items: center;
+    padding: 0 18px;
+    background-color: white;
+    cursor: pointer;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    color: map-get($palette-primary, 500);
+}
+
+.fab.fab-expanded {
+    display: flex;
+    height: 54px;
+    align-items: center;
+    padding: 0px 15px;
+}

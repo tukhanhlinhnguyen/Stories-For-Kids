@@ -1,0 +1,15 @@
+.card-1 {
+    display: flex;
+    padding: 12px;
+
+    & > .content-container {
+        flex-grow: 1;
+    }
+
+    & > .fig-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        margin-left: 10px;
+    }
+}

@@ -1,0 +1,33 @@
+.field-container {
+    width: 100%;
+
+    & > *[label] {
+        display: inline-block; // important for bottm margin
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    & input {
+        width: 100%;
+        border: none;
+        outline: none !important;
+    }
+
+    & .input-field-container {
+        width: 100% !important;
+        background-color: #ffffff;
+        width: min-content;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        padding: 0 0.8em;
+    }
+
+    [errors] {
+        display: block;
+        font-size: 12px;
+        margin-top: 5px;
+        color: mat-color($palette-warn);
+    }
+    
+}

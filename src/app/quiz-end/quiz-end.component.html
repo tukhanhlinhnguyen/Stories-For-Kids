@@ -1,0 +1,19 @@
+<div class="quiz-end-container">
+    <div class="quiz-end-falling-stars-container">
+    <h1 *ngIf="!levelManagerService.isLevelUp">Congrats! You finished the quiz</h1>
+    <h1 *ngIf="levelManagerService.isLevelUp">Congrats! You finished the quiz and leveled up</h1>
+    <h3 *ngIf="levelManagerService.isLevelUp">Your new Reading Level is {{levelManagerService.newReadingLevel}}</h3>
+    <!-- <img src="../../assets/icons/falling-stars-animation.gif"/> -->
+    <div [innerHTML]="safeAvatarSVG" class="end-page-avatar-svg-container"></div>
+    <!-- <img src="../../../../assets/imgs/star_icon.png" class="quiz-finish-image"/> -->
+    <h3>You have earned {{levelManagerService.expPointsGained}} Experience points</h3>
+    <h4>Experience Points Required for next level: {{levelManagerService.expPointsRequiredForNextLevel}}</h4>
+    </div>
+    <progress-bar [progress]="levelManagerService.levelProgressBarValue" [color]="'#6155A1'">
+    </progress-bar>
+    <div class="btn-container">
+        <button class="btn btn-secondary" (click)="replayQuiz()">Replay Quiz</button>
+        <button class="btn btn-secondary" (click)="backToHome()">Back to Home</button>
+    </div>
+</div>
+<!-- <script src="https://code.responsivevoice.org/responsivevoice.js?key=e5dGgiAW"></script> -->

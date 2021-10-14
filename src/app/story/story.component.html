@@ -1,0 +1,110 @@
+<div class="wrapper" *ngIf="state === 'inProgress'">
+  <h1>{{storyService.strname}}</h1>
+  <div class="foo">
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-pause="">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <section id="section">
+
+            <div class="card1">
+
+              <!-- pages indicator -->
+              <div *ngIf="(storyLength != undefined && storyLength != null && storyLength != 0)" class="page-indicator"><span>{{storyService.currentPageNumber}}<hr color="white" style="margin: 0;" />{{storyLength}}</span></div>
+              
+              <!-- spinner meanwhile we start playing -->
+              <div class="play-audio-spinner">
+                <mat-spinner *ngIf="btnPlayClicked" diameter="40"></mat-spinner>
+              </div>
+
+              <!-- story page image -->
+              <div *ngIf="(pageImage != undefined && pageImage != null)" class="story-image">
+                <img src="{{pageImage}}" id="storyImage" alt="image">
+              </div>
+
+              <!-- story with audio -->
+              <div class="story" *ngIf="storyAudioPlayMethod == '1'">
+                
+                <!-- list of words -->
+                <p id="story-words-page-1" #div_1><span *ngFor="let wrd of currentPageWords; let i = index" id="page1_{{i+1}}"><span class="word-span">{{wrd}}</span>&nbsp;&nbsp;&nbsp;</span></p>
+
+                <div #ref class="audios-0 audio">
+                  <audio id="audio-2" class="sub-audio-0" preload="auto" #pageAudio>
+                    <source id="pageAudio-1" src="" type="audio/mpeg">
+                  </audio>
+                </div>
+              </div>
+
+              <!-- story with tts -->
+              <div class="story" *ngIf="storyAudioPlayMethod == '2'">
+                <p id="story-words-page-1">
+                  <span *ngFor="let paragraph of this.storyParagraphs[this.ttsParagraphReader.currentPageNumber].allParagraphs">
+                    <span>{{paragraph.paragraphText}}{{paragraph.endingPunctuationMark}}</span>&nbsp;
+                  </span>
+                </p>
+                <div class="page-indicator"><span>{{storyService.currentPageNumber}}</span></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- <div class="carousel-item " *ngFor="let row of storyData.slice(1); let i = index">
+                <section id="section">
+                    <div class="card1">
+                        <div class="story-image">
+                            <img *ngIf="isStoryReady" src="{{backendHost}}/stories/{{strname}}/{{images[i+1]}}" alt="image">
+                        </div>
+                        <div class="story">
+                            <p id="story-words-page-{{i+2}}" #div_1><span *ngFor="let wrd of currentPageWords; let j = index" id="page{{i+2}}_{{j+1}}"><span class="word-span">{{wrd}}</span>&nbsp;</span></p>
+                            <div class="page-indicator"><span>{{i+2}}</span></div>
+                            <div #ref class="audios-0 audio">
+                                <audio  id="audio-1" class="sub-audio-0" *ngFor="let audio of multiPageAudios[i+1]; let j = index" preload="auto" >
+                                     <source id="pageAudio-{{i+1}}" src="{{backendHost}}/stories/{{strname}}/{{audio}}" type="audio/mpeg">
+                                </audio>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                </div> -->
+      </div>
+
+      <!-- arrow prev -->
+      <a *ngIf="showPrevBtn" class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" id="prev-page-btn" (click)="changeStoryPageManually('prev')">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+
+      <!-- arrow next -->
+      <a *ngIf="showNextBtn" class="carousel-control-next" href="#carouselExampleIndicators" role="button" #next data-slide="next" id="next-page-btn" (click)="changeStoryPageManually('next')">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+    <!-- buttons play/stop/back -->
+    <div class="button-group vertical mt-4">
+
+      <button mat-raised-button color="primary" [disabled]="!play || pauseAudio || waitForAudioLoad" (click)="play=false; toggleAudio('true');">
+        Play <mat-icon>play_arrow</mat-icon>
+      </button>
+
+      <button mat-raised-button color="primary" [disabled]="play || waitForAudioLoad" (click)="play=true; toggleAudio('false');">
+        Stop <mat-icon>stop</mat-icon>
+      </button>
+
+      <button mat-raised-button color="primary" (click)="restartStoryPage()">Restart <mat-icon>play_arrow</mat-icon><mat-icon>keyboard_return</mat-icon></button>
+
+      <button mat-raised-button color="primary" (click)="backToHome2()">Back to Home</button>
+
+    </div>
+
+    <!-- spinner -->
+    <div class="button-group vertical nt-4">
+      <mat-spinner *ngIf="(pauseAudio && !playAudio) || waitForAudioLoad"></mat-spinner>
+    </div>
+
+  </div>
+</div>
+
+<app-story-end *ngIf="state === 'DONE'"></app-story-end>
+<!-- <script src="https://code.responsivevoice.org/responsivevoice.js?key=e5dGgiAW"></script> -->

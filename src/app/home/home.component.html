@@ -1,0 +1,86 @@
+<div class="home-container" [class.with-bg]="showBg">
+  
+  <script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
+
+  <link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
+  <script>
+
+  </script>
+  <!-- <div *ngIf="showToastMessage" role="alert" aria-live="polite"
+       [innerHTML]="safeAvatarSVG">
+     </div> -->
+  <!-- (created)="onCreate()" -->
+  <!-- (close)="onClose($event)" -->
+  <!-- (beforeOpen)="onBeforeOpen()" -->
+
+  <div class="px-4" style="margin: 0px auto;">
+
+    <ejs-toast #defaulttoast id='defaulttoast' [position]="position" icon="e-meeting">
+      <ng-template #content>
+        <div>Welcome {{ this.userInfo.username }}</div>
+      </ng-template>
+      <ng-template #title>
+        <div [innerHTML]="safeAvatarSVG">Adaptive Tiles Meeting</div>
+      </ng-template>
+    </ejs-toast>
+    <ejs-toast #quizEndToast id='quizEndToast' [position]="position" icon="e-meeting">
+      <ng-template #content>
+        <div>{{ this.quizFinishMessage }}</div>
+      </ng-template>
+      <ng-template #title>
+        <div>Congratulations!</div>
+        <!-- <div [innerHTML]="safeAvatarSVG">Adaptive Tiles Meeting</div> -->
+      </ng-template>
+    </ejs-toast>
+    <ejs-toast #storyEndToast id='storyEndToast' [position]="position" icon="e-meeting">
+      <ng-template #content>
+        <div>{{ this.storyFinishMessage }}</div>
+      </ng-template>
+      <ng-template #title>
+        <div>Congratulations!</div>
+        <!-- <div [innerHTML]="safeAvatarSVG">Adaptive Tiles Meeting</div> -->
+      </ng-template>
+    </ejs-toast>
+
+    <!-- <div id="default-avatar-img" [innerHTML]="../../assets/icons/default-avatar.svg"></div> -->
+    <app-level-manager *ngIf="studentLoggedIn && !teacherLoggedIn" [userInfo]="userInfo"></app-level-manager>
+    <app-teacher *ngIf="teacherLoggedIn && !studentLoggedIn"></app-teacher>
+
+    <div class="in-progress-container">
+      <div class="in-progress-quiz-card" *ngIf="showInProgressQuiz">
+        <h2 class="card-title">In Progress Quiz</h2>
+        <app-in-progress-quiz *ngIf="showInProgressQuiz" [inProgressQuiz]="inProgressQuiz"></app-in-progress-quiz>
+      </div>
+      <div class="in-progress-story-card" *ngIf="showInProgressStory">
+        <h2 class="card-title">In Progress Story</h2>
+        <app-in-progress-story *ngIf="showInProgressStory" [storybooks]="storybooks" [inProgressStory]="inProgressStory"></app-in-progress-story>
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <img src="../../assets/icons/Others/book_shelf.png" class="books-icon">
+      <h2 class="card-title" style="border-left: none; margin-top: auto; margin-bottom: 2px;">Books</h2>
+
+      <!-- categories icons -->
+      <div class="mb-2 ml-auto"> <app-categories></app-categories></div>
+    </div>
+
+    <div class="book-list-card">
+
+      <!--  | safe 'html' -->
+      <mat-spinner *ngIf="!isStorybooksReady"></mat-spinner>
+
+      <!-- books are there, show books page -->
+      <app-book-list *ngIf="isStorybooksReady" [books]="storybooks" [storybooks]="storyBooksAsString" (bookOpened)="onBookOpen($event)"></app-book-list>
+
+      <!-- books are not there yet, show in progress -->
+      <div *ngIf="!storybooks" class="flex items-center justify-center" style="height: 100px;font-size: 24px;"><span>Loading books...</span></div>
+      <div *ngIf="storybooks && storybooks.length == 0" class="flex items-center justify-center" style="height: 100px; font-size: 24px; color: red;"><span>The list of books could not be retrieved. Please try again later.</span></div>
+
+    </div>
+
+    <div class="button-group align-end mt-3">
+      <button *ngIf="teacherLoggedIn" mat-raised-button color="primary" routerLink="/upload"> <mat-icon class="inline-block mr-2">cloud_upload</mat-icon> Upload books</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,165 @@
+<div class="tabs">
+  <input type="radio" name="tabs" id="tabone" checked="checked">
+  <label for="tabone">
+    <h1 class="level-up-heading card-title">Level Up</h1>
+  </label>
+  <div class="tab">
+    <div class="level-up-container container">
+      <div class="student-level-info-container hero-card">
+        <h1 class="level-up-heading-left card-title">Your Level Info : </h1>
+        <div class="student-reading-level-container">
+          <h3 class="level-up-text">Reading Level:</h3>
+          <img src="{{studentCurrentReadingLevelImage}}" class="completed-activities-img" />
+        </div>
+        <div class="student-exp-points-container">
+          <h3 class="level-up-text">Experience Points:
+            {{studentExpPoints}}/{{levelManagerService.expPointsRequiredForNextLevel}} </h3>
+          <img src="../../assets/icons/Others/svg/small_star.svg" class="completed-activities-img" />
+        </div>
+      </div>
+
+      <h1 class="level-up-heading card-title">More Info</h1>
+      <div class="level-up-card">
+        <div>
+          <mat-accordion>
+            <mat-expansion-panel (opened)="thisWeekPanelOpenState = true" (closed)="thisWeekPanelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <mat-icon aria-hidden="false" aria-label="book icon">book</mat-icon>
+                  Quizzes Done This Week
+                </mat-panel-title>
+                <mat-panel-description>
+                  <!-- Click here to view your quiz sessions! -->
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <table mat-table [dataSource]="levelUpService.currentWeekQuizSessions"
+                class="mat-elevation-z8 this-week-table">
+                <!-- <table  mat-table [dataSource]="weeksContainer[0]?.quizSessions" class="mat-elevation-z8 this-week-table"> -->
+                <ng-container matColumnDef="storybook_name">
+                  <th mat-header-cell *matHeaderCellDef> For Storybook</th>
+                  <td mat-cell *matCellDef="let quizSession"> {{quizSession.storybook_name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="quizScore">
+                  <th mat-header-cell *matHeaderCellDef> Quiz Score </th>
+                  <td mat-cell *matCellDef="let quizSession"> {{quizSession.quizScore}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="createdDate">
+                  <th mat-header-cell *matHeaderCellDef> On Date </th>
+                  <td mat-cell *matCellDef="let quizSession"> {{quizSession.createdDate | date}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let quizSession; columns: displayedColumns;"></tr>
+              </table>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <mat-accordion>
+            <mat-expansion-panel (opened)="thisWeekPanelOpenState = true" (closed)="thisWeekPanelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <mat-icon aria-hidden="false" aria-label="book icon">book</mat-icon>
+                  Quizzes Done Last Week
+                </mat-panel-title>
+                <mat-panel-description>
+                  <!-- Click here to view your quiz sessions! -->
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <table mat-table [dataSource]="levelUpService.lastWeekQuizSessions"
+                class="mat-elevation-z8 this-week-table">
+                <ng-container matColumnDef="storybook_name">
+                  <th mat-header-cell *matHeaderCellDef> For Storybook</th>
+                  <td mat-cell *matCellDef="let quizSession"> {{quizSession.storybook_name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="quizScore">
+                  <th mat-header-cell *matHeaderCellDef> Quiz Score </th>
+                  <td mat-cell *matCellDef="let quizSession"> {{quizSession.quizScore}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="createdDate">
+                  <th mat-header-cell *matHeaderCellDef> On Date </th>
+                  <td mat-cell *matCellDef="let quizSession"> {{quizSession.createdDate | date}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let quizSession; columns: displayedColumns;"></tr>
+              </table>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+        <!-- <div class="completed-activities-container">
+
+          <mat-card class="completed-activity-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>Reads</mat-card-title>
+            </mat-card-header>
+            <img src="../../assets/icons/Others/svg/reading_done.svg" class="completed-activities-img">
+            <mat-card-content>
+              <h1>
+                10
+              </h1>
+            </mat-card-content>
+          </mat-card>
+          
+          <mat-card class="completed-activity-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>Quizzes</mat-card-title>
+            </mat-card-header>
+            <img src="../../assets/icons/Others/svg/quiz-passed.svg" class="completed-activities-img">
+            <mat-card-content>
+              <h1>
+                10
+              </h1>
+            </mat-card-content>
+          </mat-card>
+          
+          <mat-card class="completed-activity-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>Activities</mat-card-title>
+            </mat-card-header>
+            <img src="../../assets/icons/Others/svg/activities_icon.svg" class="completed-activities-img">
+            <mat-card-content>
+              <h1>
+                10
+              </h1>
+            </mat-card-content>
+          </mat-card>
+
+        </div> -->
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- <input type="radio" name="tabs" id="tabtwo">
+  <label for="tabtwo">
+    <h1 class="level-up-heading card-title">Badges</h1>
+  </label>
+  <div class="tab">
+    <div class="hero-card">
+      <h1>Second Tab Content</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua.</p>
+    </div>
+  </div> -->
+
+  <!-- <input type="radio" name="tabs" id="tabthree">
+  <label for="tabthree">
+    <h1 class="level-up-heading card-title">Assignments</h1>
+  </label>
+  <div class="tab">
+    <div class="hero-card">
+      <h1>Third tab content</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua.</p>
+    </div>
+  </div> -->
+
+</div>

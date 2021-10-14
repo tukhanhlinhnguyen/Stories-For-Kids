@@ -1,0 +1,248 @@
+// containers
+/* .container {
+	padding: 15px 10px;
+}
+
+@media screen and (min-width: 768px) {
+    .container {
+        padding: 15px 20px;
+    }
+} */
+
+.h-pad {
+    padding-left: 12px;
+    padding-right: 12px; 
+}
+
+@media screen and (min-width: 768px) {
+    .h-pad {
+        padding-left: 12px;
+        padding-right: 12px; 
+    }
+}
+
+.v-pad-sm {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.v-pad-md {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.v-pad-lg {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.v-pad-5 {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
+
+// @mixin offset-padding($padding, $value){
+//     padding-#{$padding}: $value;
+// }
+
+// @each $i in 5, 10, 15, 20, 30 {
+//     @each $pos in top, left, bottom, right {
+
+//         .p-#{str-slice($pos, 1, 1)}-#{$i}{
+//             @include offset-padding($pos, 1px * $i) 
+//         }
+
+//     }
+// }
+
+// @each $i in 5, 10, 15, 20, 30 {
+//     .p-v-#{$i} {
+//         @include offset-padding(top, 1px * $i);
+//         @include offset-padding(bottom, 1px * $i);
+//     }
+// }
+
+// margin
+.m-v-sm {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.m-t-sm {
+    margin-top: 10px;
+}
+
+.m-b-sm {
+    margin-bottom: 10px;
+}
+
+.m-t-md {
+    margin-top: 20px;
+}
+
+.m-b-md {
+    margin-bottom: 20px;
+}
+
+// others
+.block { display: block; }
+
+.inline { display: inline; }
+
+.inline-block { display: inline-block; }
+
+.overflow-auto{ overflow: auto; }
+
+.full-width {
+    width: 100%;
+}
+
+// buttons
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    // padding: 12px 0 12px 0;
+}
+
+.button-group > * {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.button-group.align-end {
+    justify-content: flex-end;
+    & > * {
+        margin-left: 10px;
+    }
+}
+
+.button-group > *:first-child {
+    margin-left: 0px;
+}
+
+.button-group > *:last-child {
+    margin-right: 0px;
+}
+
+.button-group.align-center {
+    justify-content: center;
+    & > * {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}
+
+/* .button-group.align-center > * {
+    margin-left: 5px;
+    margin-right: 5px;
+} */
+
+.button-group.vertical {
+    flex-direction: column;
+    & > * { 
+        height: 48px;
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    & > *:first-child {  
+        margin-top: 0;
+    }
+
+    & > *:last-child {  
+        margin-bottom: 0;
+    }
+
+    @media screen and (min-width: $breakpoint-md) {
+        flex-direction: row;
+        gap: 15px;
+
+        & > * { 
+            height: unset;
+            width: unset;
+            margin: unset;
+        }
+
+        &.align-end {
+            justify-content: flex-end;
+            & > * {
+                margin-left: 10px;
+            }
+        }
+    }
+}
+
+
+
+/* Flex */
+.flex {
+    display: flex;
+}
+
+.flex.flex-column {
+    flex-direction: column;
+}
+
+.flex.flex-cross-axis-center {
+    align-items: center;
+}
+
+.flex.flex-main-axis-center {
+    justify-content: center;
+}
+
+.flex.flex-align-center {
+    align-items: center;
+}
+
+.flex > .flex-expand { /* todo: rename to flex-expanded */
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+.flex > .flex-fixed {
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.flex > .flex-fluid {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+/* Equally, vertically spaced content */
+/* .v-center {
+    display: flex;
+    direction: column;
+    justify-content: center;
+    min-height: 75vh;
+    min-height: calc(100vh - 150px);
+} */
+
+.col-items-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 75vh;
+    min-height: calc(100vh - 150px);
+}
+
+.col-items-space {
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    justify-content: space-between;
+    min-height: 75vh;
+    min-height: calc(100vh - 150px);
+}
+
+.vh-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+

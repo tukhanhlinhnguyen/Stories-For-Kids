@@ -1,0 +1,18 @@
+<div class="hero-card" *ngIf="quizReady">
+    <mat-card class="mat-card-in-progress-card">
+        <mat-card-title>You have an In Progress Quiz!</mat-card-title>
+        <div class="mb-8 in-progress-icon-container">
+            <img src="./assets/imgs/inProgressQuizIcon.jpg" class="in-progress-icons"/>
+        </div>
+        <mat-card-content>
+            <ul class="in-progress-container-items-list">
+                <li>Storybook: {{inProgressQuiz.storybookName}}</li>
+                <li>Question number: {{inProgressQuiz.stoppedOnQuestionNumber}}</li>
+                <li>Quiz score: {{inProgressQuiz.quizScore}}</li>
+                <li><button (click)="goToQuiz()" class="btn btn-primary">Complete Quiz</button></li>
+            </ul>
+          </mat-card-content>
+
+
+    </mat-card>
+</div>

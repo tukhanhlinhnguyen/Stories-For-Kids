@@ -1,0 +1,20 @@
+<div class="story-end-container">
+    <div class="story-end-falling-stars-container">
+        <h1 *ngIf="!levelManagerService.isLevelUp">Congrats! You finished the story</h1>
+        <h1 *ngIf="levelManagerService.isLevelUp">Congrats! You finished the story and leveled up</h1>
+        <h3 *ngIf="levelManagerService.isLevelUp">Your new Reading Level is {{levelManagerService.newReadingLevel}}</h3>
+        <div [innerHTML]="safeAvatarSVG" class="end-page-avatar-svg-container"></div>
+        <!-- <img src="../../../../assets/imgs/star_icon.png" class="story-finish-image"/> -->
+        <h3>You have earned {{storyService.storySessionModel.expPointsEarned}} Experience points</h3>
+        <h4>Experience Points Required for next level: {{levelManagerService.expPointsRequiredForNextLevel}}</h4>
+    </div>
+    <progress-bar [progress]="levelManagerService.levelProgressBarValue" [color]="'#6155A1'">
+    </progress-bar>
+    <div class="btn-container">
+        <button class="btn btn-secondary" (click)="replayStory()">Re-read Story</button>
+        <button class="btn btn-secondary" (click)="backToHome()">Back to Home</button>
+        <button class="btn btn-secondary" (click)="passQuiz()">Pass Quiz</button>
+    </div>
+    
+</div>
+<!-- <script src="https://code.responsivevoice.org/responsivevoice.js?key=e5dGgiAW"></script> -->

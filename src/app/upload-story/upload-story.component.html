@@ -1,0 +1,17 @@
+<div class="wrapper upload-story-container">
+    <h1 class="font-extrabold font-title">Stories</h1>
+
+    <mat-progress-bar *ngIf="0 < percentDone && percentDone < 100" mode="determinate" [value]="percentDone"></mat-progress-bar>
+    <app-list-stories *ngIf="storybooks.length" [storybooks]="storybooks" (deleteStory) = "deleteStory($event)" >
+    </app-list-stories>
+
+    <div class="button-group align-end">
+        <button mat-button color="primary" (click)="uploadBook()" class="mt-3">Create new story <mat-icon>add</mat-icon></button>
+    </div>
+</div>
+
+
+<div class="upload-container">
+    <app-list-story-content *ngIf="story !== null" [storyName] = "story.storyName" [audios] = "audios" [images] = "images"  >
+    </app-list-story-content>
+</div>

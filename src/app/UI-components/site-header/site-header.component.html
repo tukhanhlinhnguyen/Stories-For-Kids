@@ -1,0 +1,66 @@
+<div id="app-bar">
+    <div id="foo" class="flex items-center font-title">
+        <button mat-icon-button (click)="toggleNav()" id="menu-button">
+            <mat-icon>menu</mat-icon>
+        </button>
+         
+        <div id="app-bar-title" routerLink="/"><img src="../../assets/Logo/svg/Logo_7.svg"></div>
+    </div>
+
+    <ul class="nav-items" [class.visible]="navOpenedSm">
+        <li *ngIf="showTeachersTabs" (click)="showQuizSessions()">Quiz Sessions</li>
+        <li *ngIf="showTeachersTabs" (click)="showUploadQuestion()">Upload Questions</li>
+        <li *ngIf="showStudentLevelInfo && !showTeachersTabs">Experience Points: {{ studentInfo?.expPoints }}<img class="exp-points-image" src="../../../assets/icons/Others/svg/small_star.svg"/></li>
+        <li *ngIf="showStudentLevelInfo && !showTeachersTabs">Reading Level: <img src="{{studentCurrentReadingLevelImage}}" class="reading-level-img"/></li>
+        <li (click)="closeNavSm()" *ngIf="showTeachersTabs" routerLink="/upload">Upload books</li>
+        <li (click)="closeNavSm()" *ngIf="showTeachersTabs" routerLink="/editStory">Edit Storybooks</li>
+        <div [innerHTML]="safeAvatarSVG" class="avatar-image-container navbar-profile-dropdown-profile-image"></div>
+        <li class="profile-info-username">{{username}}</li>
+        <!-- <li><mat-icon>person</mat-icon>{{username}}</li> -->
+        <!-- <nav>
+            <ul>
+                <li><a href="#">Portfolio</a>
+                    <ul>
+                      <li><a href="#">Graphic</a></li>
+                      <li><a href="#">Web</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav> -->
+        <div class="navbar-relative-container">   
+            <li>
+                <!-- (click)="toggleProfileDropdown()" -->
+                <a  id="navbar-profile-btn"><mat-icon id="profile-dropdown-icon" (click)="toggleProfileDropdown()">menu</mat-icon></a>
+                <ul *ngIf="showProfileDropdown" class="navbar-profile-dropdown-section">
+                    <!-- <li class="navbar-dropdown-profile-info">
+                        <div [innerHTML]="safeAvatarSVG" class="avatar-image-container navbar-profile-dropdown-profile-image"></div>
+                        <h3 class="profile-info-username">
+                            {{username}}
+                        </h3>
+                    </li> -->
+                    <li>
+                        <a>
+                            <div class="top-bar">
+                                <button class="navbar-dropdown-btn profile-btn btn btn-primary"  id="logout-btn" (click)="profile()">My Profile</button>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <div class="top-bar">
+                                <button class="navbar-dropdown-btn profile-btn btn btn-primary"  id="level-up-btn" (click)="levelUpPage()">Level Up</button>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="top-bar">
+                                <button class="navbar-dropdown-btn btn btn-primary" (click)="logout()" id="logout-btn">Logout</button>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </div> 
+    </ul>
+</div>

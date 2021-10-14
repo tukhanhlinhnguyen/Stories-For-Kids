@@ -1,0 +1,184 @@
+@import '~@angular/material/theming';
+
+.typo-black-500 {
+	color: rgba(0, 0, 0, 0.5);
+}
+
+.typo-center {
+	text-align: center;
+}
+
+.typo-thin {
+	font-weight: 300;;
+}
+
+.typo-light {
+	font-weight: 400;
+}
+
+.typo-warn {
+	color: red;
+  }
+
+.typo-break-word {
+	overflow-wrap: break-word;
+}
+
+// dark color levels
+.typo-dark-25 {
+	color: rgba(0, 0, 0, 0.25);
+}
+
+.typo-dark-50 {
+	color: rgba(0, 0, 0, 0.5);
+}
+
+.typo-dark-75 {
+	color: rgba(0, 0, 0, 0.75);
+}
+
+
+// line height
+.typo-line-height-25 {
+	line-height: 1.25rem;
+}
+
+// font-size
+.typo-size-body-3 {
+	font-size: 18px;
+}
+
+.typo-size-body-2 {
+	font-size: 16px;
+}
+
+.typo-size-body-1 {
+	font-size: 14px;
+}
+
+// color
+.typo-color-primary {
+	color: mat-color($palette-primary, 700);
+}
+
+
+
+
+
+
+
+// size
+.text-xs {
+	font-size: 0.75rem;
+	line-height: 1rem;
+}
+
+.text-sm {
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+}
+
+.text-base {
+	font-size: 1rem;
+	line-height: 1.5rem;
+}
+
+.text-lg {
+	font-size: 1.125rem;
+	line-height: 1.75rem;
+}
+
+.text-xl {
+	font-size: 1.25rem;
+	line-height: 1.75rem;
+}
+
+.text-2xl {
+	font-size: 1.5rem;
+	line-height: 2rem;
+}
+
+.text-3xl {
+	font-size: 1.875rem;
+	line-height: 2.25rem;
+}
+
+.text-4xl {
+	font-size: 2.25rem;
+	line-height: 2.5rem;
+}
+
+.text-5xl {
+	font-size: 3rem;
+	line-height: 1;
+}
+
+.text-6xl {
+	font-size: 3.75rem;
+	line-height: 1;
+}
+
+.text-7xl {
+	font-size: 4.5rem;
+	line-height: 1;
+}
+
+.text-8xl {
+	font-size: 6rem;
+	line-height: 1;
+}
+
+.text-9xl {
+	font-size: 8rem;
+	line-height: 1;
+}
+
+// weight
+.font-thin { font-weight: 100 !important; }
+
+.font-extralight { font-weight: 200 !important; }
+
+.font-light { font-weight: 300 !important; }
+
+.font-normal { font-weight: 400 !important; }
+
+.font-medium { font-weight: 500 !important; }
+
+.font-semibold { font-weight: 600 !important; }
+
+.font-bold { font-weight: 700 !important; }
+
+.font-extrabold { font-weight: 800 !important; }
+
+.font-black { font-weight: 900 !important; }
+
+// color
+@each $key, $value in $palette-gray {
+	.text-gray-#{$key} {
+		color: $value;
+	}
+}
+
+@each $key, $value in $palette-primary {
+	@if type-of($value) == color {
+		.text-primary-#{$key} {
+			color: $value;
+		}
+	}
+}
+
+@each $key, $value in $palette-accent {
+	@if type-of($value) == color {
+		.text-accent-#{$key} {
+			color: $value;
+		}
+	}
+}
+
+.text-warn {
+	color: map-get($mat-red, 500);
+}
+
+.text-white {
+	color: #ffffff;
+}
