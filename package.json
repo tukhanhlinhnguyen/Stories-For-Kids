@@ -34,6 +34,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.2",
     "@fortawesome/free-regular-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
+    "@regosen/gapless-5": "^1.0.1",
     "@swimlane/ngx-charts": "^18.0.1",
     "@syncfusion/ej2-angular-base": "19.2.60",
     "@syncfusion/ej2-angular-buttons": "19.2.60",

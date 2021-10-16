@@ -13,6 +13,7 @@ import { StoryPageWord } from '../model/story-page-word.model';
 import { TTSParagraphReader } from '../model/TTS-paragraph-reader.model';
 import { StoryPageParagraph } from '../model/story-page.paragraph.model';
 import { Paragraph } from '../model/paragraph.model';
+const { Gapless5 } = require('@regosen/gapless-5');
 
 enum StoryAudioPlayMethod {
   AUDIO_FILE_OPTION = '1',
@@ -71,9 +72,8 @@ export class StoryComponent implements OnInit {
   //
   audioElements: HTMLAudioElement[] = [];
 
-  // each word reading timing to be filled on the fly :
-  // timing: number[] = [1.514667, 0.509334, 1.155792, 0.872, 0.596, 1.139688, 0.912, 0.629334, 0.365334, 0.945083, 0.698667, 0.648, 0.898667, 0.218667, 0.836542, 0.861334, 0.210667, 0.637334, 2.161708];
-  timing: number[] = [];
+
+  player :any;
 
   constructor(
     private storyService: StoryService,
@@ -85,57 +85,10 @@ export class StoryComponent implements OnInit {
   ) {
   }
 
-  endStoryState() {
-
-    this.assignStudentNewExpPoints();
-    // this.saveStorySession();
-    this.updateStudentInfo();
-    this.state = 'DONE';
-    this.cdr.detectChanges();
-  }
-
-  saveStorySession() {
-    var storybook: Story = JSON.parse(localStorage.getItem("storybook"));
-    var user: Student = JSON.parse(localStorage.getItem("user"));
-    if (storybook && user) {
-      var storySession = new StorySession();
-      storySession.forStorybookId = storybook.storybookId;
-      storySession.byStudentId = +user.userId;
-      storySession.expPointsEarned = 5 * this.levelManagerService.storybookReadingLevelToValueRef[storybook.storybookReadingLevel];
-      this.storyService.storyScore = 5 * this.levelManagerService.storybookReadingLevelToValueRef[storybook.storybookReadingLevel];
-      storySession.sessionStatus = 'DONE'
-      storySession.createdDate = new Date().getTime();
-      storySession.storybookName = storybook.storyName;
-    }
-    this.storyService.saveStorySession(storySession).subscribe((response) => {
-      this.homeService.sendUpdate("showStudentLevelInfo");
-    });
-  }
-
-  assignStudentNewExpPoints() {
-    var storybook: Storybook = JSON.parse(localStorage.getItem("storybook"));
-    var expPointsForLevel = this.levelManagerService.storybookReadingLevelToValueRef[this.storyService.storySessionModel.storybookReadingLevel];
-    this.storyService.expPointsEarned = 5 * expPointsForLevel;
-    this.levelManagerService.studentInfo.expPoints += this.storyService.expPointsEarned;
-  }
-
-  updateStudentInfo() {
-    this.levelManagerService.updateStudentInfo()
-      .subscribe((response: Student) => {
-        localStorage.setItem("user", JSON.stringify(response))
-        this.levelManagerService.studentInfo = response;
-      });
-  }
-
-  backToHome() {
-    this.router.navigate([`/`], { state: { storyDone: true } });
-  }
-
-  backToHome2() {
-    this.router.navigate([`/`]);
-  }
-
   ngOnInit(): void {
+
+    //init audio player
+    this.player = new Gapless5({ guiId: 'gapless5-player-id', singleMode:true});
 
     var isInProgressStorySession: boolean = false;
     var storybook: Storybook = null;
@@ -192,28 +145,73 @@ export class StoryComponent implements OnInit {
     });
 
     this.levelManagerService.setupStudentInfo();
-
     // we are ready to play : btn play & btn pause can be toggled
     setTimeout(() => {
 
       this.waitForAudioLoad = false;
-
+      //preload audio file to the player
+      for (let x=0;x<this.currentPageWords.length;x++) {
+        this.preloadAudio(x);
+      }
     }, 3000);
   }
 
-  /* populateParagraphDOMElements() {
-    setTimeout(() => {
-      var currentPageDOMWords = $("#story-words-page-1").children();
-      console.log("currentPageDOMWords: ");
-      console.log(currentPageDOMWords);
-      console.log(this.storyParagraphs);
-      for (var i = 0; i < currentPageDOMWords.length; i++) {
-        // this.storyParagraphs[this.ttsParagraphReader.currentPageNumber].allParagraphs[i].DOMElement = currentPageDOMWords[i];
-        this.storyParagraphs[this.ttsParagraphReader.currentPageNumber].allParagraphs[i].DOMElement = $(currentPageDOMWords[i]).children()[0]
-      }
+  //preload audio on the page
+  preloadAudio(index) {
+    let audiopath = environment.BACKEND_HOST + "/stories/" + this.storyService.strname + "/" + this.currentPageAudios[index];
+    this.player.addTrack(audiopath);
+  }
 
-    }, 1000);
-  } */
+  endStoryState() {
+
+    this.assignStudentNewExpPoints();
+    // this.saveStorySession();
+    this.updateStudentInfo();
+    this.state = 'DONE';
+    this.cdr.detectChanges();
+  }
+
+  saveStorySession() {
+    var storybook: Story = JSON.parse(localStorage.getItem("storybook"));
+    var user: Student = JSON.parse(localStorage.getItem("user"));
+    if (storybook && user) {
+      var storySession = new StorySession();
+      storySession.forStorybookId = storybook.storybookId;
+      storySession.byStudentId = +user.userId;
+      storySession.expPointsEarned = 5 * this.levelManagerService.storybookReadingLevelToValueRef[storybook.storybookReadingLevel];
+      this.storyService.storyScore = 5 * this.levelManagerService.storybookReadingLevelToValueRef[storybook.storybookReadingLevel];
+      storySession.sessionStatus = 'DONE'
+      storySession.createdDate = new Date().getTime();
+      storySession.storybookName = storybook.storyName;
+    }
+    this.storyService.saveStorySession(storySession).subscribe((response) => {
+      this.homeService.sendUpdate("showStudentLevelInfo");
+    });
+  }
+
+  assignStudentNewExpPoints() {
+    var storybook: Storybook = JSON.parse(localStorage.getItem("storybook"));
+    var expPointsForLevel = this.levelManagerService.storybookReadingLevelToValueRef[this.storyService.storySessionModel.storybookReadingLevel];
+    this.storyService.expPointsEarned = 5 * expPointsForLevel;
+    this.levelManagerService.studentInfo.expPoints += this.storyService.expPointsEarned;
+  }
+
+  updateStudentInfo() {
+    this.levelManagerService.updateStudentInfo()
+      .subscribe((response: Student) => {
+        localStorage.setItem("user", JSON.stringify(response))
+        this.levelManagerService.studentInfo = response;
+      });
+  }
+
+  backToHome() {
+    this.router.navigate([`/`], { state: { storyDone: true } });
+  }
+
+  backToHome2() {
+    this.router.navigate([`/`]);
+  }
+
 
   loadStoryInfo() {
 
@@ -308,18 +306,6 @@ export class StoryComponent implements OnInit {
 
     console.log(response);
 
-    // var storybookString: string = localStorage.getItem("storybook");
-    // var storybookObj: Storybook = null;
-    /* if (storybookString != undefined && storybookString != "null") {
-      storybookObj = JSON.parse(storybookString);
-    } */
-
-    // if(response?.[0]){
-    // for text content
-    // for splitting based on single words for audio file stories
-    // if (storyAudioPlayMethod == StoryAudioPlayMethod.AUDIO_FILE_OPTION) {
-    // this.currentPageWords = response?.[0].value.split(/\s+|،+/);
-
     //
     response[0].shift();
     
@@ -341,44 +327,6 @@ export class StoryComponent implements OnInit {
     }
     console.log("populateSinglePageStoryData > this.currentPageWords length : 2 : " + this.currentPageWords.length);
     // }
-
-    // for splitting based on paragraphs for TTS service stories 
-    /* else if (storyAudioPlayMethod == StoryAudioPlayMethod.TTS_OPTION) {
-      // this.currentPageWords = response?.[0].value.split(/\./);
-      this.ttsParagraphReader = new TTSParagraphReader()
-      this.ttsParagraphReader.currentPageNumber = this.storyService.currentPageNumber - 1;
-      this.ttsParagraphReader.currentParagraphNumber = 0;
-      this.ttsParagraphReader.forStorybook = storybookObj.storybookId;
-      if (response?.[0]) {
-        var allParagraphs: string[] = response?.[0];
-        this.storyLength = allParagraphs.length - 1;
-        this.ttsParagraphReader.totalParagraphNum = response?.[0].length - 1;
-        for (var i = 1; i < allParagraphs.length; i++) {
-          // start from i = 1 to get rid of story title paragraph 
-          var storyParagraph: StoryPageParagraph = new StoryPageParagraph()
-          storyParagraph.allSinglePageText = allParagraphs[i];
-          // var allSinglePageParagraphs = allParagraphs[i].split(/\./);
-          var allSinglePageParagraphs = allParagraphs[i].split(/\.|،+/);
-          var allSinglePageParagraphsWithPeriodEnding = allParagraphs[i].split(/\./);
-          storyParagraph.allParagraphs = new Array<Paragraph>();
-          for (var j = 0; j < allSinglePageParagraphs.length; j++) {
-            if (allSinglePageParagraphs[j] != "" && allSinglePageParagraphs[j] != " ") {
-              var paragraph = new Paragraph()
-              // paragraph.paragraphText = allSinglePageParagraphs[j].substring(1);
-              paragraph.paragraphText = allSinglePageParagraphs[j];
-              if (allSinglePageParagraphsWithPeriodEnding.includes(allSinglePageParagraphs[j])) {
-                paragraph.endingPunctuationMark = ".";
-              } else {
-                paragraph.endingPunctuationMark = "،";
-              }
-              storyParagraph.allParagraphs.push(paragraph);
-            }
-          }
-          this.storyParagraphs.push(storyParagraph);
-          this.populateParagraphDOMElements();
-        }
-      }
-    } */
 
     //
     if (response?.[1]) {
@@ -448,47 +396,6 @@ export class StoryComponent implements OnInit {
       //
       this.setCurrentPageAudios(this.allAudiosForAudioFiles);
 
-      // reset array timings and fill it with get durations on the fly
-      /* this.timing = new Array(currentPageAudios.length);
-      this.currentPageAudios.map(
-        function (url, index) {
-
-          // YA21104 we pass 'this' (the global ts 'this'), so we can use inside the this.timing to fill durations on the fly
-          const self = this;
-
-          // define the fct that will fill the durations
-          var getDuration = function (next) {
-
-            //
-            var fullUrl = environment.BACKEND_HOST + "/stories/" + self.storyService.strname + "/" + url;
-            var _player = new Audio(fullUrl);
-            _player.addEventListener("durationchange", function (e) {
-
-              // 'this' here refers to audio element _player
-              if (this.duration != Infinity) {
-
-                var duration = this.duration;
-                _player.remove();
-                next(duration); // call our custom fct that will set the durations in the array
-
-              };
-            }, false);
-
-            //
-            _player.load();
-            _player.currentTime = 24 * 60 * 60; // fake big time
-            _player.volume = 0;
-            // _player.play();
-            // waiting...
-          }
-          // use the duration defined fct to actually fill the durations
-          getDuration(function (duration) {
-
-            self.timing[index] = duration;
-          });
-        },
-        this  // YA21104 we pass 'this' (the global ts 'this'), so we can use inside the this.timing to fill durations on the fly
-      ); */
     }
 
     //
@@ -780,94 +687,36 @@ export class StoryComponent implements OnInit {
     });
   }
 
-  async singleWordPlay(storyPageWord: StoryPageWord, audioElement: HTMLAudioElement, timing: number) {
+  singleWordPlay(storyPageWord: StoryPageWord, audioElement: HTMLAudioElement,index:Number) {
+    return new Promise((resolve, reject) =>{
 
-    // resumeAudio : paused | start | resume
-    if (this.resumeAudio == "paused") {
+      //play the word
+      this.player.gotoTrack(index)
+      this.player.playpause();
 
-      this.remainingAudio.load();
-      this.remainingAudio.play();
-      await this.wait(1.5);
-      this.highWord.style.backgroundColor = "";
-      this.resumeAudio = "resume";
-    }
-
-    // this.startAudio = true;
-    this.audioElement = document.createElement("audio");
-    console.log('this.audioElement:', this.audioElement)
-    // this.audioElement = audioElement;
-    // this.audioElement.setAttribute("autoplay", "true")
-    this.audioElement.setAttribute("src", storyPageWord.audioPath);
-    // console.log(storyPageWord.audioPath);
-    // console.log(this.audioElement.src);
-    // this.audioElement.setAttribute("preload", "auto");
-    this.audioElement.load();
-    // this.audioElement.playbackRate = 0.5;
-    await this.audioElement.play(); // .play() is a promise, so let us wait until it returns (means ready to play)
-
-    // highlight the read word
-    this.highWord = storyPageWord.DOMElement;
-    this.highWord.style.backgroundColor = "yellow";
-
-    // we started reading at least first audio, so we stop spinner
-    if (this.btnPlayClicked === true) {
-      this.btnPlayClicked = false;
-    }
-
-    // make a pause : this pause needs to pause until the current word being read before starting the next one
-    this.pauseAudio = true;
-    // console.log(this.timing);
-    if (timing != undefined) {
-      // console.log(timing);
-      await this.wait(timing);
-    } else {
-      console.log("here 4");
-      await this.wait(1.5); // why do we have this fist audio always undefined duration?
-    }
-    // console.log(timing);
-    this.pauseAudio = false;
-
-    //
-    if (this.playAudio) {
-
-      storyPageWord.DOMElement.style.backgroundColor = "";
-      if (this.audioIndex >= (this.storyWords.length - 1)) {
-
-        await this.wait(1);
-        this.isReachedPageEnd = true;
+      //highlight the word
+      this.highWord = storyPageWord.DOMElement;
+      this.highWord.style.backgroundColor = "yellow";
+      // we started reading at least first audio, so we stop spinner
+      if (this.btnPlayClicked === true) {
+        this.btnPlayClicked = false;
       }
-    }
+
+      // make a pause : this pause needs to pause until the current word being read before starting the next one
+      this.pauseAudio = true;
+
+      //
+      if (this.playAudio) {
+        if (this.audioIndex >= (this.storyWords.length - 1)) {
+
+          this.wait(1);
+          this.isReachedPageEnd = true;
+        }
+      }
+      //resolve the promise once the sound is finished
+      this.player.onfinishedtrack =resolve;
+    })
   }
-
-  /* async singleWordPlayTTS(storyPageWord: StoryPageWord) {
-
-    if (this.resumeAudio == "paused") {
-      this.remainingAudio.load();
-      // this.remainingAudio.play();
-      responsiveVoice.speak(this.highWord.innerText, "Arabic Male", { rate: 1, volume: 2 });
-      await this.wait(1.5);
-      this.highWord.style.backgroundColor = "";
-      this.resumeAudio = "resume";
-    }
-    // this.startAudio = true;
-    this.audioElement = document.createElement("audio");
-    this.audioElement.setAttribute("src", storyPageWord.audioPath);
-    this.audioElement.load();
-    // this.audioElement.play();
-    this.highWord = storyPageWord.DOMElement;
-    responsiveVoice.speak(this.highWord.innerText, "Arabic Male", { rate: 1, volume: 2 });
-    storyPageWord.DOMElement.style.backgroundColor = "yellow";
-    this.pauseAudio = true;
-    await this.wait(1.5);
-    this.pauseAudio = false;
-    if (this.playAudio) {
-      storyPageWord.DOMElement.style.backgroundColor = "";
-      if (this.audioIndex >= (this.storyWords.length - 1)) {
-        await this.wait(1);
-        this.isReachedPageEnd = true;
-      }
-    }
-  } */
 
   async paragraphPlayTTS(storyPageParagraph: StoryPageParagraph) {
 
@@ -993,69 +842,7 @@ export class StoryComponent implements OnInit {
 
     // TEMP : create the audio ahead
     this.audioElements = [];
-    for (var i = audioIndex; i < storyLengthParameter; i++) {
-      var audioElement = document.createElement("audio");
-      audioElement.autoplay = false;
-      // audioElement.setAttribute("autoplay", "false");
-      // audioElement.setAttribute("preload", "auto"); // to avoid loading in chunk (http response 206)
-      // audioElement.setAttribute("preload", "metadata");
-      // audioElement.preload = "metadata";
-      audioElement.preload = "auto";
-      // audioElement.preload = "none";
-      // console.log(this.storyWords[i].audioPath);
-      audioElement.setAttribute("src", this.storyWords[i].audioPath);
 
-      // audioElement.setAttribute("controls", "true");
-      // audioElement.autoplay = false;
-      audioElement.load();
-
-      // console.log(audioElement.duration);
-      this.audioElements.push(audioElement);
-    }
-
-    // reset array timings and fill it with get durations on the fly
-    this.timing = new Array(storyLengthParameter);
-    this.currentPageAudios.map(
-      function (url, index) {
-
-        // YA21104 we pass 'this' (the global ts 'this'), so we can use inside the this.timing to fill durations on the fly
-        const self = this;
-
-        // define the fct that will fill the durations
-        var getDuration = function (next) {
-
-          //
-          var fullUrl = environment.BACKEND_HOST + "/stories/" + self.storyService.strname + "/" + url;
-          var _player = new Audio(fullUrl);
-          _player.addEventListener("durationchange", function (e) {
-
-            // 'this' here refers to audio element _player
-            if (this.duration != Infinity) {
-
-              var duration = this.duration;
-              _player.remove();
-              next(duration); // call our custom fct that will set the durations in the array
-
-            };
-          }, false);
-
-          //
-          _player.load();
-          _player.currentTime = 24 * 60 * 60; // fake big time
-          _player.volume = 0;
-          // _player.play();
-          // waiting...
-        }
-        // use the duration defined fct to actually fill the durations
-        getDuration(function (duration) {
-
-          self.timing[index] = duration;
-        });
-      },
-      this  // YA21104 we pass 'this' (the global ts 'this'), so we can use inside the this.timing to fill durations on the fly
-    );
-
-    //
     for (var i = audioIndex; i < storyLengthParameter; i++) {
 
       //
@@ -1068,7 +855,11 @@ export class StoryComponent implements OnInit {
         switch (this.storyAudioPlayMethod) {
 
           case StoryAudioPlayMethod.AUDIO_FILE_OPTION:
-            await this.singleWordPlay(this.storyWords[i], this.audioElements[i], this.timing[i]);
+            await this.singleWordPlay(this.storyWords[i], this.audioElements[i],i).then(async () =>{
+              //remove the word highlight
+              this.storyWords[i].DOMElement.style.backgroundColor = ""
+              this.pauseAudio = false;
+            });
             break;
 
           case StoryAudioPlayMethod.TTS_OPTION:
@@ -1176,7 +967,8 @@ export class StoryComponent implements OnInit {
 
       if (this.storyAudioPlayMethod == StoryAudioPlayMethod.AUDIO_FILE_OPTION) {
 
-        this.audioElement.pause();
+        this.player.stop();
+        this.pauseAudio=false
         this.playAudio = false;
         this.resumeAudio = "paused";
         this.remainingAudio = this.audioElement;
