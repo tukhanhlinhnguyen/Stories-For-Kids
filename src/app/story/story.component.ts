@@ -13,6 +13,9 @@ import { StoryPageWord } from '../model/story-page-word.model';
 import { TTSParagraphReader } from '../model/TTS-paragraph-reader.model';
 import { StoryPageParagraph } from '../model/story-page.paragraph.model';
 import { Paragraph } from '../model/paragraph.model';
+import { HttpClient } from '@angular/common/http';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
+declare var require: any;
 const { Gapless5 } = require('@regosen/gapless-5');
 
 enum StoryAudioPlayMethod {
@@ -61,7 +64,9 @@ export class StoryComponent implements OnInit {
   waitForAudioLoad: boolean = true;
   isAudioAutoPlay: boolean = false;
   isReachedPageEnd: boolean = false;
-  pageImage: string;
+  pageImage: any;
+  prevPageImage: any;
+  nextPageImage: any;
   carouselSlide: Element;
   storyAudioPlayMethod: StoryAudioPlayMethod;
   ttsParagraphReader: TTSParagraphReader;
@@ -81,7 +86,9 @@ export class StoryComponent implements OnInit {
     private levelManagerService: LevelManagerService,
     private router: Router,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private http: HttpClient,
+    private sanitizer: DomSanitizer
   ) {
   }
 
@@ -149,10 +156,7 @@ export class StoryComponent implements OnInit {
     setTimeout(() => {
 
       this.waitForAudioLoad = false;
-      //preload audio file to the player
-      for (let x=0;x<this.currentPageWords.length;x++) {
-        this.preloadAudio(x);
-      }
+      
     }, 3000);
   }
 
@@ -298,7 +302,7 @@ export class StoryComponent implements OnInit {
     if (!this.storyPageImages && response?.[1]) {
       this.sortStoryPageImages(response?.[1])
     }
-    this.assignStoryPageImage();
+    this.assignStoryPageImage(this.nextPageImage);
     // this.pageImage = environment.BACKEND_HOST + "/stories/" + this.storyService.strname + "/" + this.storyPageImages[this.storyService.currentPageNumber - 1];
   }
 
@@ -326,23 +330,7 @@ export class StoryComponent implements OnInit {
       this.currentPageWords.splice(emptySpace, 1);
     }
     console.log("populateSinglePageStoryData > this.currentPageWords length : 2 : " + this.currentPageWords.length);
-    // }
 
-    //
-    if (response?.[1]) {
-
-      // for image path
-      if (!this.storyPageImages && response?.[1]) {
-
-        // this.storyPageImages = response?.[1];
-        this.sortStoryPageImages(response?.[1]);
-      }
-
-      // prepare page image
-      this.assignStoryPageImage();
-    }
-
-    //
     if (response?.[2]) {
 
       // for audio paths
@@ -426,6 +414,11 @@ export class StoryComponent implements OnInit {
     // console.log(this.storyService.currentPageNumber - 1);
     // console.log(this.currentPageAudios);
     console.log("populateSinglePageStoryData > setCurrentPageAudios > currentPageAudios length : " + this.currentPageAudios.length);
+    //preload audio file to the player
+    this.player.removeAllTracks()
+    for (let x=0;x<this.currentPageWords.length;x++) {
+      this.preloadAudio(x);
+    }
   }
 
   sortAllAudiosForAudioFiles(allAudiosForAudioFiles: string[][]) {
@@ -482,7 +475,7 @@ export class StoryComponent implements OnInit {
       }
 
       // prepare page image
-      this.assignStoryPageImage();
+      //this.assignStoryPageImage(this.nextPageImage);
 
       //
       setTimeout(() => {
@@ -521,7 +514,7 @@ export class StoryComponent implements OnInit {
       }
 
       // prepare page image
-      this.assignStoryPageImage();
+      this.assignStoryPageImage(this.nextPageImage);
 
       //
       setTimeout(() => {
@@ -543,9 +536,35 @@ export class StoryComponent implements OnInit {
     });
   }
 
-  assignStoryPageImage() {
-
-    this.pageImage = environment.BACKEND_HOST + "/stories/" + this.storyService.strname + "/" + this.storyPageImages[this.storyService.currentPageNumber - 1];
+  assignStoryPageImage(img:any) {
+    console.log(this.storyService.currentPageNumber + "👯‍♂️")
+      if(img) {
+        document.getElementById('storyImageContainer').innerHTML=""
+        document.getElementById('storyImageContainer').append(img);
+      }else{
+        let img  = new Image();
+        img.src = environment.BACKEND_HOST + "/stories/" + this.storyService.strname + "/" + this.storyPageImages[this.storyService.currentPageNumber-1];
+        img.id = "storyImage"
+        img.style.width = "100%"
+        this.pageImage = img
+        document.getElementById('storyImageContainer').innerHTML=""
+        document.getElementById('storyImageContainer').append(img);
+      }
+      if(this.storyService.currentPageNumber > 1){
+        let imgPrev  = new Image();
+        imgPrev.src = environment.BACKEND_HOST + "/stories/" + this.storyService.strname + "/" + this.storyPageImages[this.storyService.currentPageNumber-2];
+        imgPrev.id = "storyImage"
+        imgPrev.style.width = "100%"
+        this.prevPageImage = imgPrev
+        console.log('this.imgPrev:', this.prevPageImage)
+      }  
+      let imgNext  = new Image();
+        imgNext.src = environment.BACKEND_HOST + "/stories/" + this.storyService.strname + "/" + this.storyPageImages[this.storyService.currentPageNumber];
+        imgNext.id = "storyImage"
+        imgNext.style.width = "100%"
+        this.nextPageImage = imgNext
+        console.log('this.nextPageImage:', this.nextPageImage)
+      
   }
 
   wait(ms: number) {
@@ -987,13 +1006,14 @@ export class StoryComponent implements OnInit {
 
   // change (move to next or previous) page manually by clicking on arrows
   changeStoryPageManually($direction) {
-
+    
     this.carouselSlide = document.querySelector('.carousel-item');
     if ($direction == "prev") {
 
       // move to prev page
       this.storyService.currentPageNumber--;
-      
+      this.assignStoryPageImage(this.prevPageImage);
+
       if (this.storyAudioPlayMethod == StoryAudioPlayMethod.TTS_OPTION) {
         this.ttsParagraphReader.currentPageNumber -= 1;
         this.ttsParagraphReader.currentParagraphNumber = 0;
@@ -1014,9 +1034,9 @@ export class StoryComponent implements OnInit {
       this.carouselSlide.classList.add('animate__animated', 'animate__slideInLeft');
 
     } else if ($direction == "next") {
-
       // move to next page
       this.storyService.currentPageNumber++;
+      this.assignStoryPageImage(this.nextPageImage);
 
       // TTS ?
       if (this.storyAudioPlayMethod == StoryAudioPlayMethod.TTS_OPTION) {
