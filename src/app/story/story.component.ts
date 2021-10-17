@@ -73,6 +73,7 @@ export class StoryComponent implements OnInit {
   audioPlaying: boolean = false;
   storyPageImages: string[] = null;
   allAudiosForAudioFiles: string[][] = [];
+  firstPageImg :any
 
   //
   audioElements: HTMLAudioElement[] = [];
@@ -149,7 +150,16 @@ export class StoryComponent implements OnInit {
 
       //
       this.adjustDirectionArrows();
+
+      //init first page img
+      let img  = new Image();
+      img.src = environment.BACKEND_HOST + "/stories/" + this.storyService.strname + "/" + this.storyPageImages[0];
+      img.id = "storyImage"
+      img.style.width = "100%"
+      this.firstPageImg = img
+      
     });
+    
 
     this.levelManagerService.setupStudentInfo();
     // we are ready to play : btn play & btn pause can be toggled
@@ -397,10 +407,6 @@ export class StoryComponent implements OnInit {
   }
 
   setCurrentPageAudios(allAudiosForAudioFiles: string[][]) {
-
-    //
-    console.log("page num : " + this.storyService.currentPageNumber);
-    // console.log("populateSinglePageStoryData > setCurrentPageAudios > allAudiosForAudioFiles length : " + this.allAudiosForAudioFiles.length);
     this.currentPageAudios = /* this. */allAudiosForAudioFiles[this.storyService.currentPageNumber - 1].sort(
       (one, two) =>
       (
@@ -460,6 +466,10 @@ export class StoryComponent implements OnInit {
   }
 
   getDifferentPageStoryData(autoPlay: boolean) {
+    //update img if autoplay
+    if(autoPlay) {
+      this.assignStoryPageImage(this.nextPageImage)
+    }
 
     this.storyService.getStoryPageData(this.storyService.strname, this.storyService.currentPageNumber, false).subscribe((response) => {
 
@@ -473,9 +483,6 @@ export class StoryComponent implements OnInit {
 
         this.populateSinglePageTTSStoryData(response);
       }
-
-      // prepare page image
-      //this.assignStoryPageImage(this.nextPageImage);
 
       //
       setTimeout(() => {
@@ -513,9 +520,6 @@ export class StoryComponent implements OnInit {
         this.populateSinglePageTTSStoryData(response);
       }
 
-      // prepare page image
-      this.assignStoryPageImage(this.nextPageImage);
-
       //
       setTimeout(() => {
 
@@ -537,7 +541,6 @@ export class StoryComponent implements OnInit {
   }
 
   assignStoryPageImage(img:any) {
-    console.log(this.storyService.currentPageNumber + "👯‍♂️")
       if(img) {
         document.getElementById('storyImageContainer').innerHTML=""
         document.getElementById('storyImageContainer').append(img);
@@ -556,15 +559,12 @@ export class StoryComponent implements OnInit {
         imgPrev.id = "storyImage"
         imgPrev.style.width = "100%"
         this.prevPageImage = imgPrev
-        console.log('this.imgPrev:', this.prevPageImage)
       }  
       let imgNext  = new Image();
         imgNext.src = environment.BACKEND_HOST + "/stories/" + this.storyService.strname + "/" + this.storyPageImages[this.storyService.currentPageNumber];
         imgNext.id = "storyImage"
         imgNext.style.width = "100%"
-        this.nextPageImage = imgNext
-        console.log('this.nextPageImage:', this.nextPageImage)
-      
+        this.nextPageImage = imgNext      
   }
 
   wait(ms: number) {
@@ -593,7 +593,6 @@ export class StoryComponent implements OnInit {
 
     //
     var currentPageDOMWords = $("#story-words-page-1").children();
-    console.log("currentPageDOMWords");
     // console.log(currentPageDOMWords);
 
     //
@@ -774,23 +773,6 @@ export class StoryComponent implements OnInit {
     }
   }
 
-  /* changeTTSStoryPage($direction: string) {
-
-    if ($direction == "next") {
-
-      this.ttsParagraphReader.currentParagraphNumber = 0;
-      this.ttsParagraphReader.currentPageNumber += 1;
-      this.storyService.currentPageNumber += 1;
-      this.getDifferentPageStoryData();
-
-    } else if ($direction == "prev") {
-
-      this.ttsParagraphReader.currentParagraphNumber = 0;
-      this.ttsParagraphReader.currentPageNumber -= 1;
-      this.storyService.currentPageNumber -= 1;
-      this.getDifferentPageStoryData();
-    }
-  } */
 
   // paragrah end event for TTS only
   onParagraphAudioEnd() {
@@ -1119,6 +1101,9 @@ export class StoryComponent implements OnInit {
     // transitioning
     this.pageImage = null;
     this.currentPageWords = [];
+    
+    //reset image
+    this.assignStoryPageImage(this.firstPageImg)
 
     // Save in progress story session stopped Page Number back to page
     this.firstPageAudioContent();
